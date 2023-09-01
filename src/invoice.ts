@@ -1,10 +1,13 @@
 import { v4 as uuidv4 } from "uuid";
 
 interface InvoiceInterface {
+  uuid: string;
+  transactionId: string;
+  driver: string;
   amount: number;
-  setUuid(uuid: string | null): Invoice;
+  setUuid(uuid: string): Invoice;
   getUuid(): string;
-  setTransactionId(token: string): Invoice;
+  setTransactionId(transactionId: string): Invoice;
   getTransactionId(): string;
   setAmount(amount: number): Invoice;
   getAmount(): number;
@@ -22,7 +25,7 @@ export default class Invoice implements InvoiceInterface {
     this.setUuid();
   }
 
-  setUuid(uuid: string | null = null) {
+  setUuid(uuid: string = null) {
     if (!uuid) uuid = uuidv4();
 
     this.uuid = uuid;
@@ -34,8 +37,8 @@ export default class Invoice implements InvoiceInterface {
     return this.uuid;
   }
 
-  setTransactionId(token: string) {
-    this.transactionId = token;
+  setTransactionId(transactionId: string) {
+    this.transactionId = transactionId;
 
     return this;
   }

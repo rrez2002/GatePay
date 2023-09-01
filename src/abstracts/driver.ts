@@ -1,6 +1,6 @@
 import Invoice from "../invoice";
 
-interface Setting {
+export interface Setting {
   merchantId: number;
   apiPaymentUrl: string;
   apiPurchaseUrl: string;
@@ -15,7 +15,7 @@ interface Setting {
 
 export abstract class Driver {
   constructor(
-    protected invoice: Invoice = new Invoice(),
+    protected invoice: Invoice,
     protected settings: Setting,
   ) {}
 
@@ -29,8 +29,8 @@ export abstract class Driver {
     return this.invoice;
   }
 
-  abstract purchase(): Promise<object>;
+  abstract purchase(): Promise<string>;
 
   abstract pay(): Promise<object>;
-  abstract verify(data: { token: string }): Promise<object>;
+  abstract verify(): Promise<string>;
 }

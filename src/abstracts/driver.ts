@@ -1,17 +1,5 @@
+import { Setting } from "../contracts/interface/setting.interface";
 import Invoice from "../invoice";
-
-export interface Setting {
-  merchantId: number;
-  apiPaymentUrl: string;
-  apiPurchaseUrl: string;
-  callbackUrl: string;
-  apiVerificationUrl: string;
-
-  phone?: string;
-  email?: string;
-  description?: string;
-  validCardNumber?: string;
-}
 
 export abstract class Driver {
   constructor(

@@ -1,19 +1,5 @@
+import { InvoiceInterface } from "./contracts/interface/invoice.interface";
 import { v4 as uuidv4 } from "uuid";
-
-interface InvoiceInterface {
-  uuid: string;
-  transactionId: string;
-  driver: string;
-  amount: number;
-  setUuid(uuid: string): Invoice;
-  getUuid(): string;
-  setTransactionId(transactionId: string): Invoice;
-  getTransactionId(): string;
-  setAmount(amount: number): Invoice;
-  getAmount(): number;
-  setDriver(driver: string): Invoice;
-  getDriver(): string;
-}
 
 export default class Invoice implements InvoiceInterface {
   uuid: string;

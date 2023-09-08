@@ -1,5 +1,5 @@
 export interface Setting {
-  merchantId: number;
+  merchantId: string;
   apiPaymentUrl: string;
   apiPurchaseUrl: string;
   callbackUrl: string;

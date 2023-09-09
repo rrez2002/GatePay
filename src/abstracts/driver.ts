@@ -1,3 +1,4 @@
+import { Gateway } from "../gateway";
 import { Setting } from "../contracts/interface/setting.interface";
 import Invoice from "../invoice";
 
@@ -19,6 +20,6 @@ export abstract class Driver {
 
   abstract purchase(): Promise<string>;
 
-  abstract pay(): Promise<object>;
-  abstract verify(): Promise<string>;
+  abstract pay(): Gateway;
+  abstract verify(): Promise<any>;
 }

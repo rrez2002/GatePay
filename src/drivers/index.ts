@@ -1,1 +1,1 @@
-export { PayIR } from "./payir/payir";
+export { PayIR } from "./payir/payir.driver";

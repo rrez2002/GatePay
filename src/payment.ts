@@ -1,7 +1,7 @@
 import Invoice from "./invoice";
 import { Driver } from "./abstracts/driver";
-import { Setting } from "./contracts/interface/setting.interface";
-import { driverApis, drivers } from "./config/payment";
+import { Setting } from "./contracts/interface";
+import { driverApis, drivers } from "./config";
 import { Gateway } from "./gateway";
 
 type driverType = keyof typeof drivers;

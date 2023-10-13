@@ -1,7 +1,7 @@
 import Invoice from "../../invoice";
 import { Driver } from "../../abstracts/driver";
 import axios from "axios";
-import { Setting } from "../../contracts/interface/setting.interface";
+import { Setting } from "../../contracts/interface";
 import { v4 as uuidv4 } from "uuid";
 import { Gateway } from "../../gateway";
 
@@ -36,7 +36,6 @@ export class PayIR extends Driver {
   async purchase(): Promise<string> {
     try {
       let factorNumber = uuidv4();
-      console.log(factorNumber);
 
       let data = {
         amount: this.invoice.getAmount(),

@@ -1,5 +1,5 @@
 import { Gateway } from "../gateway";
-import { Setting } from "../contracts/interface/setting.interface";
+import { Setting } from "../contracts/interface";
 import Invoice from "../invoice";
 
 export abstract class Driver {

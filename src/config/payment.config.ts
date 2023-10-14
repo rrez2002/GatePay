@@ -25,6 +25,14 @@ const driverApis: Record<string, Setting> = {
     callbackUrl: "http://yoursite.com/path/to",
     merchantId: "zibal",
   },
+  zarinpal: {
+    apiPaymentUrl: "https://www.zarinpal.com/pg/StartPay/",
+    apiPurchaseUrl: "https://api.zarinpal.com/pg/v4/payment/request.json",
+    apiVerificationUrl: "https://api.zarinpal.com/pg/v4/payment/verify.json",
+    description: "توضیحات مربوط به تراکنش",
+    callbackUrl: "http://yoursite.com/path/to",
+    merchantId: "",
+  },
 };
 
 export { drivers, defaultDriver, driverApis };

@@ -1,10 +1,14 @@
 import Invoice from "../../invoice";
 import { Driver } from "../../abstracts/driver";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { Setting } from "../../contracts/interface";
-import { v4 as uuidv4 } from "uuid";
 import { Gateway } from "../../gateway";
-import { PurchaseResponseType, VerifyResponseType } from "./payir.type";
+import {
+  PurchaseDataType,
+  PurchaseResponseType,
+  VerifyDataType,
+  VerifyResponseType,
+} from "./payir.type";
 
 export class PayIR extends Driver {
   constructor(
@@ -25,25 +29,31 @@ export class PayIR extends Driver {
    */
   async purchase(): Promise<string> {
     try {
-      let factorNumber = uuidv4();
-
-      let data = {
+      this.invoice.setUuid();
+      let data: PurchaseDataType = {
         amount: this.invoice.getAmount(),
         api: this.settings.merchantId,
         redirect: this.settings.callbackUrl,
         description: this.settings.description,
-        factorNumber: factorNumber,
+        factorNumber: this.invoice.getUuid(),
         mobile: this.settings.phone,
       };
 
-      const response: AxiosResponse<PurchaseResponseType> =
+      const response: AxiosResponse<PurchaseResponseType, PurchaseDataType> =
         await this.client.post(this.settings.apiPurchaseUrl, data);
+
+      if (response.data.status != "1") {
+        throw this.translateStatus(response.data.status);
+      }
 
       this.invoice.setTransactionId(response.data.token);
 
       return this.invoice.getTransactionId();
     } catch (error: any) {
-      throw this.translateStatus(error.response.data.errorCode);
+      if (error instanceof AxiosError) {
+        throw this.translateStatus(error.response.data.status);
+      }
+      throw error;
     }
   }
 
@@ -63,26 +73,27 @@ export class PayIR extends Driver {
    */
   async verify(): Promise<VerifyResponseType> {
     try {
-      let data = {
+      let data: VerifyDataType = {
         token: this.invoice.getTransactionId(),
         api: this.settings.merchantId,
       };
 
-      const response = await this.client.post(
-        this.settings.apiVerificationUrl,
-        data,
-      );
+      const response: AxiosResponse<VerifyResponseType, VerifyDataType> =
+        await this.client.post(this.settings.apiVerificationUrl, data);
 
       if (
-        response.data.status != 1 ||
-        response.data.amount != this.invoice.getAmount()
+        response.data.status != "1" ||
+        response.data.amount != this.invoice.getAmount().toString()
       ) {
-        throw Error("err");
+        throw this.translateStatus(response.data.status);
       }
 
       return response.data;
     } catch (error: any) {
-      throw this.translateStatus(error.response.data.errorCode);
+      if (error instanceof AxiosError) {
+        throw this.translateStatus(error.response.data.status);
+      }
+      throw error;
     }
   }
 

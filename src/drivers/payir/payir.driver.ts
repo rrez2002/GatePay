@@ -1,20 +1,10 @@
 import Invoice from "../../invoice";
 import { Driver } from "../../abstracts/driver";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { Setting } from "../../contracts/interface";
 import { v4 as uuidv4 } from "uuid";
 import { Gateway } from "../../gateway";
-
-type VerifyResponseType = {
-  status: number;
-  amount: string;
-  transId: string;
-  factorNumber: string;
-  mobile: string;
-  description: string;
-  cardNumber: string;
-  message: string;
-};
+import { PurchaseResponseType, VerifyResponseType } from "./payir.type";
 
 export class PayIR extends Driver {
   constructor(
@@ -46,10 +36,8 @@ export class PayIR extends Driver {
         mobile: this.settings.phone,
       };
 
-      const response: any = await this.client.post(
-        this.settings.apiPurchaseUrl,
-        data,
-      );
+      const response: AxiosResponse<PurchaseResponseType> =
+        await this.client.post(this.settings.apiPurchaseUrl, data);
 
       this.invoice.setTransactionId(response.data.token);
 

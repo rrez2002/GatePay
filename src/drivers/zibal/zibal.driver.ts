@@ -9,19 +9,22 @@ import {
   VerifyDataType,
   VerifyResponseType,
 } from "./zibal.type";
+import { driverApis } from "../../config";
 
 export class Zibal extends Driver {
+  private client = axios.create({
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  });
+
   constructor(
-    protected invoice: Invoice,
-    protected settings: Setting,
-    private client = axios.create({
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    }),
+    protected invoice: Invoice = new Invoice(),
+    protected settings: Setting = driverApis["zibal"],
   ) {
     super(invoice, settings);
+    this.invoice.setDriver("zibal");
   }
 
   /**

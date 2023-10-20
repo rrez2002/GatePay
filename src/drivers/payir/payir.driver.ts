@@ -9,19 +9,22 @@ import {
   VerifyDataType,
   VerifyResponseType,
 } from "./payir.type";
+import { driverApis } from "../../config";
 
 export class PayIR extends Driver {
+  private client = axios.create({
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  });
+
   constructor(
-    protected invoice: Invoice,
-    protected settings: Setting,
-    private client = axios.create({
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    }),
+    protected invoice: Invoice = new Invoice(),
+    protected settings: Setting = driverApis["payir"],
   ) {
     super(invoice, settings);
+    this.invoice.setDriver("payir");
   }
 
   /**

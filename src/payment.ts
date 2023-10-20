@@ -1,13 +1,11 @@
 import Invoice from "./invoice";
 import { Driver } from "./abstracts/driver";
-import { Setting } from "./contracts/interface";
 import { driverApis, drivers } from "./config";
 import { Gateway } from "./gateway";
 
 type driverType = keyof typeof drivers;
 
 export class Payment {
-  public settings: Setting;
   public callbackUrl: string;
   public driver: string;
   public driverInstance: Driver;
@@ -69,8 +67,6 @@ export class Payment {
   setDriver(driver: string) {
     this.validateDriver(driver);
     this.driver = driver;
-    this.invoice.setDriver(driver);
-    this.setGatewayApi();
     this.setDriverInstance(driver);
 
     return this;
@@ -82,10 +78,7 @@ export class Payment {
    * @returns Payment
    */
   setDriverInstance(driver: string) {
-    this.driverInstance = new drivers[driver as driverType](
-      this.invoice,
-      this.settings,
-    );
+    this.driverInstance = new drivers[driver as driverType]();
     return this;
   }
 
@@ -108,16 +101,6 @@ export class Payment {
       return true;
     }
     throw new Error("driver is invalid");
-  }
-
-  /**
-   *
-   * @returns Payment
-   */
-  setGatewayApi() {
-    this.settings = driverApis[this.driver];
-
-    return this;
   }
 
   /**

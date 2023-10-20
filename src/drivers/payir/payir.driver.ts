@@ -29,7 +29,6 @@ export class PayIR extends Driver {
    */
   async purchase(): Promise<string> {
     try {
-      this.invoice.setUuid();
       let data: PurchaseDataType = {
         amount: this.invoice.getAmount(),
         api: this.settings.merchantId,

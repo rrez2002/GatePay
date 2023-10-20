@@ -11,7 +11,7 @@ export default class Invoice implements InvoiceInterface {
     this.setUuid();
   }
 
-  setUuid(uuid: string = null) {
+  setUuid(uuid?: string) {
     if (!uuid) uuid = uuidv4();
 
     this.uuid = uuid;
@@ -20,6 +20,8 @@ export default class Invoice implements InvoiceInterface {
   }
 
   getUuid() {
+    if (!this.uuid) this.setUuid();
+
     return this.uuid;
   }
 

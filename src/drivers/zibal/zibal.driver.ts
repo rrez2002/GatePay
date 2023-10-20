@@ -29,7 +29,6 @@ export class Zibal extends Driver {
    */
   async purchase(): Promise<string> {
     try {
-      this.invoice.setUuid();
       let data: PurchaseDataType = {
         amount: this.invoice.getAmount(),
         merchant: this.settings.merchantId,

@@ -20,8 +20,8 @@ export class Zarinpal extends Driver {
   });
 
   constructor(
-    protected invoice: Invoice = new Invoice(),
-    protected settings: Setting = driverApis["zarinpal"],
+    public invoice: Invoice = new Invoice(),
+    public settings: Setting = driverApis["zarinpal"],
   ) {
     super(invoice, settings);
     this.invoice.setDriver("zarinpal");
@@ -99,7 +99,7 @@ export class Zarinpal extends Driver {
     }
   }
 
-  private translateStatus(status: string) {
+  private translateStatus(status: string): string {
     const translations: Record<string, string> = {
       "100": "تراکنش با موفقیت انجام گردید",
       "101":

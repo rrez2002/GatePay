@@ -20,8 +20,8 @@ export class PayIR extends Driver {
   });
 
   constructor(
-    protected invoice: Invoice = new Invoice(),
-    protected settings: Setting = driverApis["payir"],
+    public invoice: Invoice = new Invoice(),
+    public settings: Setting = driverApis["payir"],
   ) {
     super(invoice, settings);
     this.invoice.setDriver("payir");
@@ -99,7 +99,7 @@ export class PayIR extends Driver {
     }
   }
 
-  private translateStatus(status: string) {
+  private translateStatus(status: string): string {
     const translations: Record<string, string> = {
       "0": "درحال حاضر درگاه بانکی قطع شده و مشکل بزودی برطرف می شود",
       "-1": "API Key ارسال نمی شود",

@@ -1,4 +1,3 @@
-import Invoice from "./invoice";
 import { Driver } from "./abstracts/driver";
 import { driverApis, drivers } from "./config";
 import { Gateway } from "./gateway";
@@ -6,13 +5,10 @@ import { Gateway } from "./gateway";
 type driverType = keyof typeof drivers;
 
 export class Payment {
-  public callbackUrl: string;
-  public driver: string;
-  public driverInstance: Driver;
-  public invoice: Invoice;
+  protected driverName: string;
+  protected driver: Driver;
 
   constructor(driver: string) {
-    this.invoice = new Invoice();
     this.setDriver(driver);
   }
 
@@ -21,8 +17,8 @@ export class Payment {
    * @param url
    * @returns Payment
    */
-  setCallbackUrl(url: string) {
-    this.callbackUrl = url;
+  setCallbackUrl(url: string): Payment {
+    this.getDriverInstance().settings.callbackUrl = url;
 
     return this;
   }
@@ -31,8 +27,8 @@ export class Payment {
    *
    * @returns Payment
    */
-  resetCallbackUrl() {
-    this.setCallbackUrl(driverApis[this.driver].callbackUrl);
+  resetCallbackUrl(): Payment {
+    this.setCallbackUrl(driverApis[this.driverName].callbackUrl);
 
     return this;
   }
@@ -42,43 +38,43 @@ export class Payment {
    * @param amount
    * @returns Payment
    */
-  setAmount(amount: number) {
-    this.invoice.setAmount(amount);
+  setAmount(amount: number): Payment {
+    this.getDriverInstance().invoice.setAmount(amount);
 
     return this;
   }
 
   /**
    *
-   * @param id
+   * @param transactionId
    * @returns Payment
    */
-  setTransactionId(id: string) {
-    this.invoice.setTransactionId(id);
+  setTransactionId(transactionId: string): Payment {
+    this.getDriverInstance().invoice.setTransactionId(transactionId);
 
     return this;
   }
 
   /**
    *
-   * @param driver
+   * @param driverName
    * @returns Payment
    */
-  setDriver(driver: string) {
-    this.validateDriver(driver);
-    this.driver = driver;
-    this.setDriverInstance(driver);
+  setDriver(driverName: string): Payment {
+    this.validateDriver(driverName);
+    this.driverName = driverName;
+    this.setDriverInstance(driverName);
 
     return this;
   }
 
   /**
    *
-   * @param driver
+   * @param driverName
    * @returns Payment
    */
-  setDriverInstance(driver: string) {
-    this.driverInstance = new drivers[driver as driverType]();
+  setDriverInstance(driverName: string): Payment {
+    this.driver = new drivers[driverName as driverType]();
     return this;
   }
 
@@ -86,18 +82,18 @@ export class Payment {
    *
    * @returns Driver
    */
-  getDriverInstance() {
-    if (this.driverInstance) return this.driverInstance;
-    return this.setDriverInstance(this.driver);
+  getDriverInstance(): Driver {
+    if (this.driver) return this.driver;
+    return this.setDriverInstance(this.driverName).driver;
   }
 
   /**
    *
-   * @param driver
+   * @param driverName
    * @returns boolean
    */
-  validateDriver(driver: string) {
-    if (driver in drivers) {
+  validateDriver(driverName: string): boolean {
+    if (driverName in drivers) {
       return true;
     }
     throw new Error("driver is invalid");
@@ -105,38 +101,26 @@ export class Payment {
 
   /**
    *
-   * @param invoice
-   * @param callbackUrl
    * @returns Payment
    */
-  async purchase(invoice?: Invoice, callbackUrl?: string) {
-    if (invoice) this.invoice = invoice;
-    if (callbackUrl) this.setCallbackUrl(callbackUrl);
-
-    const transactionId = await this.driverInstance.purchase();
-
-    this.invoice.setTransactionId(transactionId);
+  async purchase(): Promise<Payment> {
+    await this.getDriverInstance().purchase();
 
     return this;
   }
 
   /**
    *
-   * @returns Payment
+   * @returns Gateway
    */
   pay(): Gateway {
-    this.getDriverInstance();
-
-    return this.driverInstance.pay();
+    return this.getDriverInstance().pay();
   }
 
   /**
    *
-   * @returns Payment
    */
   verify() {
-    this.getDriverInstance();
-
-    return this.driverInstance.verify();
+    return this.getDriverInstance().verify();
   }
 }

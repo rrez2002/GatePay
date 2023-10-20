@@ -4,8 +4,8 @@ import Invoice from "../invoice";
 
 export abstract class Driver {
   constructor(
-    protected invoice: Invoice,
-    protected settings: Setting,
+    public invoice: Invoice,
+    public settings: Setting,
   ) {}
 
   public setInvoice(invoice: Invoice): Driver {

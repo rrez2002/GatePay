@@ -20,8 +20,8 @@ export class Zibal extends Driver {
   });
 
   constructor(
-    protected invoice: Invoice = new Invoice(),
-    protected settings: Setting = driverApis["zibal"],
+    public invoice: Invoice = new Invoice(),
+    public settings: Setting = driverApis["zibal"],
   ) {
     super(invoice, settings);
     this.invoice.setDriver("zibal");
@@ -70,7 +70,7 @@ export class Zibal extends Driver {
   /**
    *
    */
-  async verify() {
+  async verify(): Promise<VerifyResponseType> {
     try {
       let data: VerifyDataType = {
         trackId: this.invoice.getTransactionId(),
@@ -93,7 +93,7 @@ export class Zibal extends Driver {
     }
   }
 
-  private translateStatus(status: string) {
+  private translateStatus(status: string): string {
     const translations: Record<string, string> = {
       "100": "با موفقیت تایید شد",
       "102": "merchant یافت نشد",

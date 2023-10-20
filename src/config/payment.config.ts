@@ -1,12 +1,14 @@
+import { driverType } from "../contracts/type";
 import { Setting } from "../contracts/interface";
-import { PayIR, Zibal, Zarinpal } from "../drivers";
+import { PayIR, Zibal, Zarinpal, Idpay } from "../drivers";
 
-const defaultDriver: string = "payir";
+const defaultDriver: driverType = "payir";
 
 const drivers = {
   payir: PayIR,
   zibal: Zibal,
   zarinpal: Zarinpal,
+  idpay: Idpay,
 };
 
 const driverApis: Record<string, Setting> = {
@@ -33,6 +35,14 @@ const driverApis: Record<string, Setting> = {
     description: "توضیحات مربوط به تراکنش",
     callbackUrl: "http://yoursite.com/path/to",
     merchantId: "",
+  },
+  idpay: {
+    apiPaymentUrl: "https://api.idpay.ir/v1.1/payment/",
+    apiPurchaseUrl: "https://api.idpay.ir/v1.1/payment",
+    apiVerificationUrl: "https://api.idpay.ir/v1.1/payment/verify",
+    description: "توضیحات مربوط به تراکنش",
+    callbackUrl: "http://yoursite.com/path/to",
+    merchantId: "7c9c2457-2798-4d42-b2e2-d8db9ff5b298",
   },
 };
 

@@ -1,11 +1,12 @@
 import { Setting } from "../contracts/interface";
-import { PayIR, Zibal } from "../drivers";
+import { PayIR, Zibal, Zarinpal } from "../drivers";
 
 const defaultDriver: string = "payir";
 
 const drivers = {
   payir: PayIR,
   zibal: Zibal,
+  zarinpal: Zarinpal,
 };
 
 const driverApis: Record<string, Setting> = {

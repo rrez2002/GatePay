@@ -1,14 +1,13 @@
+import { driverType } from "./contracts/type";
 import { Driver } from "./abstracts/driver";
-import { driverApis, drivers } from "./config";
+import { defaultDriver, driverApis, drivers } from "./config";
 import { Gateway } from "./gateway";
-
-type driverType = keyof typeof drivers;
 
 export class Payment {
   protected driverName: string;
   protected driver: Driver;
 
-  constructor(driver: string) {
+  constructor(driver: driverType = defaultDriver) {
     this.setDriver(driver);
   }
 
@@ -61,7 +60,6 @@ export class Payment {
    * @returns Payment
    */
   setDriver(driverName: string): Payment {
-    this.validateDriver(driverName);
     this.driverName = driverName;
     this.setDriverInstance(driverName);
 
@@ -89,18 +87,6 @@ export class Payment {
 
   /**
    *
-   * @param driverName
-   * @returns boolean
-   */
-  validateDriver(driverName: string): boolean {
-    if (driverName in drivers) {
-      return true;
-    }
-    throw new Error("driver is invalid");
-  }
-
-  /**
-   *
    * @returns Payment
    */
   async purchase(): Promise<Payment> {
@@ -120,7 +106,7 @@ export class Payment {
   /**
    *
    */
-  verify() {
+  async verify() {
     return this.getDriverInstance().verify();
   }
 }

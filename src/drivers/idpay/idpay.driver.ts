@@ -1,7 +1,7 @@
 import Invoice from "../../invoice";
 import { Driver } from "../../abstracts/driver";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { Setting } from "../../contracts/interface";
+import { Detail, Setting } from "../../contracts/interface";
 import { Gateway } from "../../gateway";
 import {
   PurchaseDataType,
@@ -26,8 +26,9 @@ export class Idpay extends Driver {
   constructor(
     public invoice: Invoice = new Invoice(),
     public settings: IdpaySetting = driverApis["idpay"],
+    public detail?: Detail,
   ) {
-    super(invoice, settings);
+    super(invoice, settings, detail);
     this.invoice.setDriver("idpay");
   }
 
@@ -39,9 +40,11 @@ export class Idpay extends Driver {
       let data: PurchaseDataType = {
         amount: this.invoice.getAmount(),
         callback: this.settings.callbackUrl,
-        desc: this.settings.description,
+        desc: this.detail.description,
         order_id: this.invoice.getUuid(),
-        phone: this.settings.phone,
+        name: this.detail.name,
+        phone: this.detail.phone,
+        mail: this.detail.email,
       };
 
       const headers = {

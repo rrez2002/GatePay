@@ -1,12 +1,14 @@
 export interface Setting {
-  merchantId: string;
-  apiPaymentUrl: string;
-  apiPurchaseUrl: string;
+  readonly apiPaymentUrl: string;
+  readonly apiPurchaseUrl: string;
+  readonly apiVerificationUrl: string;
   callbackUrl: string;
-  apiVerificationUrl: string;
+  merchantId: string;
+}
 
-  phone?: string;
-  email?: string;
-  description?: string;
-  validCardNumber?: string;
+export interface Detail {
+  name: string;
+  phone: string;
+  email: string;
+  description: string;
 }

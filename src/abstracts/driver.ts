@@ -1,11 +1,12 @@
 import { Gateway } from "../gateway";
-import { Setting } from "../contracts/interface";
+import { Detail, Setting } from "../contracts/interface";
 import Invoice from "../invoice";
 
 export abstract class Driver {
   constructor(
     public invoice: Invoice,
     public settings: Setting,
+    public detail?: Detail,
   ) {}
 
   public setInvoice(invoice: Invoice): Driver {

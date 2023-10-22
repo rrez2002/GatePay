@@ -3,9 +3,11 @@ export type PurchaseDataType = {
   merchant_id: string;
   callback_url: string;
   description: string;
+  currency?: "IRT" | "IRR";
   metadata: {
     order_id: string;
     mobile: string;
+    email?: string;
   };
 };
 

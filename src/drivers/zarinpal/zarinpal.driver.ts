@@ -1,7 +1,7 @@
 import Invoice from "../../invoice";
 import { Driver } from "../../abstracts/driver";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { Setting } from "../../contracts/interface";
+import { Detail, Setting } from "../../contracts/interface";
 import { Gateway } from "../../gateway";
 import {
   PurchaseDataType,
@@ -10,6 +10,10 @@ import {
   VerifyResponseType,
 } from "./zarinpal.type";
 import { driverApis } from "../../config";
+
+export interface ZarinpalDetail extends Detail {
+  currency?: "IRT" | "IRR";
+}
 
 export class Zarinpal extends Driver {
   private client = axios.create({
@@ -22,8 +26,9 @@ export class Zarinpal extends Driver {
   constructor(
     public invoice: Invoice = new Invoice(),
     public settings: Setting = driverApis["zarinpal"],
+    public detail?: ZarinpalDetail,
   ) {
-    super(invoice, settings);
+    super(invoice, settings, detail);
     this.invoice.setDriver("zarinpal");
   }
 
@@ -36,10 +41,12 @@ export class Zarinpal extends Driver {
         amount: this.invoice.getAmount(),
         merchant_id: this.settings.merchantId,
         callback_url: this.settings.callbackUrl,
-        description: this.settings.description,
+        description: this.detail.description,
+        currency: this.detail.currency,
         metadata: {
           order_id: this.invoice.getUuid(),
-          mobile: this.settings.phone,
+          mobile: this.detail.phone,
+          email: this.detail.email,
         },
       };
 

@@ -1,7 +1,7 @@
 import Invoice from "../../invoice";
 import { Driver } from "../../abstracts/driver";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { Setting } from "../../contracts/interface";
+import { Detail, Setting } from "../../contracts/interface";
 import { Gateway } from "../../gateway";
 import {
   PurchaseDataType,
@@ -10,6 +10,10 @@ import {
   VerifyResponseType,
 } from "./payir.type";
 import { driverApis } from "../../config";
+
+export interface PayIRDetail extends Detail {
+  validCardNumber?: string;
+}
 
 export class PayIR extends Driver {
   private client = axios.create({
@@ -22,8 +26,9 @@ export class PayIR extends Driver {
   constructor(
     public invoice: Invoice = new Invoice(),
     public settings: Setting = driverApis["payir"],
+    public detail?: PayIRDetail,
   ) {
-    super(invoice, settings);
+    super(invoice, settings, detail);
     this.invoice.setDriver("payir");
   }
 
@@ -36,9 +41,10 @@ export class PayIR extends Driver {
         amount: this.invoice.getAmount(),
         api: this.settings.merchantId,
         redirect: this.settings.callbackUrl,
-        description: this.settings.description,
+        description: this.detail.description,
         factorNumber: this.invoice.getUuid(),
-        mobile: this.settings.phone,
+        mobile: this.detail.phone,
+        validCardNumber: this.detail.validCardNumber,
       };
 
       const response: AxiosResponse<PurchaseResponseType, PurchaseDataType> =

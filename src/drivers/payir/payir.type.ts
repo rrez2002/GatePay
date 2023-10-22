@@ -5,6 +5,7 @@ export type PurchaseDataType = {
   description: string;
   factorNumber: string;
   mobile: string;
+  validCardNumber: string;
 };
 
 export type PurchaseResponseType = {

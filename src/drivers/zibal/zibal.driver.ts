@@ -1,7 +1,7 @@
 import Invoice from "../../invoice";
 import { Driver } from "../../abstracts/driver";
 import axios, { AxiosResponse } from "axios";
-import { Setting } from "../../contracts/interface";
+import { Detail, Setting } from "../../contracts/interface";
 import { Gateway } from "../../gateway";
 import {
   PurchaseDataType,
@@ -22,8 +22,9 @@ export class Zibal extends Driver {
   constructor(
     public invoice: Invoice = new Invoice(),
     public settings: Setting = driverApis["zibal"],
+    public detail?: Detail,
   ) {
-    super(invoice, settings);
+    super(invoice, settings, detail);
     this.invoice.setDriver("zibal");
   }
 
@@ -36,9 +37,9 @@ export class Zibal extends Driver {
         amount: this.invoice.getAmount(),
         merchant: this.settings.merchantId,
         callbackUrl: this.settings.callbackUrl,
-        description: this.settings.description,
+        description: this.detail.description,
         orderId: this.invoice.getUuid(),
-        mobile: this.settings.phone,
+        mobile: this.detail.phone,
       };
 
       const response: AxiosResponse<PurchaseResponseType, PurchaseDataType> =

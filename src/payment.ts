@@ -4,7 +4,7 @@ import { defaultDriver, driverApis, drivers } from "./config";
 import { Gateway } from "./gateway";
 
 export class Payment {
-  protected driverName: string;
+  protected driverName: driverType;
   protected driver: Driver;
 
   constructor(driver: driverType = defaultDriver) {
@@ -17,7 +17,7 @@ export class Payment {
    * @returns Payment
    */
   setCallbackUrl(url: string): Payment {
-    this.getDriverInstance().settings.callbackUrl = url;
+    this.getDriver().settings.callbackUrl = url;
 
     return this;
   }
@@ -38,7 +38,7 @@ export class Payment {
    * @returns Payment
    */
   setAmount(amount: number): Payment {
-    this.getDriverInstance().invoice.setAmount(amount);
+    this.getDriver().invoice.setAmount(amount);
 
     return this;
   }
@@ -49,7 +49,7 @@ export class Payment {
    * @returns Payment
    */
   setTransactionId(transactionId: string): Payment {
-    this.getDriverInstance().invoice.setTransactionId(transactionId);
+    this.getDriver().invoice.setTransactionId(transactionId);
 
     return this;
   }
@@ -59,20 +59,10 @@ export class Payment {
    * @param driverName
    * @returns Payment
    */
-  setDriver(driverName: string): Payment {
+  setDriver(driverName: driverType): Payment {
     this.driverName = driverName;
-    this.setDriverInstance(driverName);
+    this.driver = new drivers[driverName]();
 
-    return this;
-  }
-
-  /**
-   *
-   * @param driverName
-   * @returns Payment
-   */
-  setDriverInstance(driverName: string): Payment {
-    this.driver = new drivers[driverName as driverType]();
     return this;
   }
 
@@ -80,9 +70,9 @@ export class Payment {
    *
    * @returns Driver
    */
-  getDriverInstance(): Driver {
+  getDriver(): Driver {
     if (this.driver) return this.driver;
-    return this.setDriverInstance(this.driverName).driver;
+    return this.setDriver(this.driverName).driver;
   }
 
   /**
@@ -90,7 +80,7 @@ export class Payment {
    * @returns Payment
    */
   async purchase(): Promise<Payment> {
-    await this.getDriverInstance().purchase();
+    await this.getDriver().purchase();
 
     return this;
   }
@@ -100,13 +90,13 @@ export class Payment {
    * @returns Gateway
    */
   pay(): Gateway {
-    return this.getDriverInstance().pay();
+    return this.getDriver().pay();
   }
 
   /**
    *
    */
   async verify() {
-    return this.getDriverInstance().verify();
+    return this.getDriver().verify();
   }
 }

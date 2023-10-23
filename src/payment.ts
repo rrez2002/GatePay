@@ -79,9 +79,15 @@ export class Payment {
    *
    * @returns Payment
    */
-  async purchase(): Promise<Payment> {
+  async purchase(
+    callback?: (amont: number, transactionId: string, uuid: string) => any,
+  ): Promise<Payment> {
     await this.getDriver().purchase();
-
+    await callback(
+      this.getDriver().getInvoice().getAmount(),
+      this.getDriver().getInvoice().getTransactionId(),
+      this.getDriver().getInvoice().getUuid(),
+    );
     return this;
   }
 

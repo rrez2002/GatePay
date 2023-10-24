@@ -29,7 +29,7 @@ export class PayIR extends Driver {
     public detail?: PayIRDetail,
   ) {
     super(invoice, settings, detail);
-    this.invoice.setDriver("payir");
+    this.invoice.setDriverName("payir");
   }
 
   /**

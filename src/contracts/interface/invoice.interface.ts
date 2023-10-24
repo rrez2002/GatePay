@@ -11,6 +11,6 @@ export interface InvoiceInterface {
   getTransactionId(): string;
   setAmount(amount: number): Invoice;
   getAmount(): number;
-  setDriver(driver: string): Invoice;
-  getDriver(): string;
+  setDriverName(driver: string): Invoice;
+  getDriverName(): string;
 }

@@ -41,11 +41,11 @@ export default class Invoice implements InvoiceInterface {
     return this;
   }
 
-  setDriver(driver: string) {
+  setDriverName(driver: string) {
     this.driver = driver;
     return this;
   }
-  getDriver() {
+  getDriverName() {
     return this.driver;
   }
 }

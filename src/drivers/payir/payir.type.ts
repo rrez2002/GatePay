@@ -2,10 +2,10 @@ export type PurchaseDataType = {
   amount: number;
   api: string;
   redirect: string;
-  description: string;
+  description?: string;
   factorNumber: string;
-  mobile: string;
-  validCardNumber: string;
+  mobile?: string;
+  validCardNumber?: string;
 };
 
 export type PurchaseResponseType = {

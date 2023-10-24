@@ -22,10 +22,16 @@ export class Zibal extends Driver {
   constructor(
     public invoice: Invoice = new Invoice(),
     public settings: Setting = driverApis["zibal"],
-    public detail?: Detail,
+    public detail: Detail = {},
   ) {
     super(invoice, settings, detail);
-    this.invoice.setDriver("zibal");
+    this.invoice.setDriverName("zibal");
+  }
+
+  setDetail(detail: keyof Detail, value: string): Driver {
+    this.detail[detail] = value;
+
+    return this;
   }
 
   /**

@@ -26,10 +26,16 @@ export class Idpay extends Driver {
   constructor(
     public invoice: Invoice = new Invoice(),
     public settings: IdpaySetting = driverApis["idpay"],
-    public detail?: Detail,
+    public detail: Detail = {},
   ) {
     super(invoice, settings, detail);
     this.invoice.setDriverName("idpay");
+  }
+
+  setDetail(detail: keyof Detail, value: string): Driver {
+    this.detail[detail] = value;
+
+    return this;
   }
 
   /**

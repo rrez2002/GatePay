@@ -26,10 +26,16 @@ export class Zarinpal extends Driver {
   constructor(
     public invoice: Invoice = new Invoice(),
     public settings: Setting = driverApis["zarinpal"],
-    public detail?: ZarinpalDetail,
+    public detail: ZarinpalDetail = {},
   ) {
     super(invoice, settings, detail);
     this.invoice.setDriverName("zarinpal");
+  }
+
+  setDetail(detail: keyof ZarinpalDetail, value: any): Driver {
+    this.detail[detail] = value;
+
+    return this;
   }
 
   /**

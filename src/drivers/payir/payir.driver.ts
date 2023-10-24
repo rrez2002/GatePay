@@ -26,10 +26,16 @@ export class PayIR extends Driver {
   constructor(
     public invoice: Invoice = new Invoice(),
     public settings: Setting = driverApis["payir"],
-    public detail?: PayIRDetail,
+    public detail: PayIRDetail = {},
   ) {
     super(invoice, settings, detail);
     this.invoice.setDriverName("payir");
+  }
+
+  setDetail(detail: keyof PayIRDetail, value: string): Driver {
+    this.detail[detail] = value;
+
+    return this;
   }
 
   /**

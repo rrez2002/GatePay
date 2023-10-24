@@ -6,7 +6,7 @@ export abstract class Driver {
   constructor(
     public invoice: Invoice,
     public settings: Setting,
-    public detail?: Detail,
+    public detail: Detail,
   ) {}
 
   public setInvoice(invoice: Invoice): Driver {
@@ -16,6 +16,12 @@ export abstract class Driver {
   }
 
   public getInvoice() {
+    return this.invoice;
+  }
+
+  abstract setDetail(detail: keyof Detail, value: string): Driver;
+
+  public getDetail() {
     return this.invoice;
   }
 

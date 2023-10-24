@@ -1,13 +1,11 @@
-import { driverType } from "./contracts/type";
 import { Driver } from "./abstracts/driver";
-import { defaultDriver, driverApis, drivers } from "./config";
+import { driverApis } from "./config";
 import { Gateway } from "./gateway";
 
-export class Payment {
-  protected driverName: driverType;
-  protected driver: Driver;
+export class Payment<T extends Driver> {
+  protected driver: T;
 
-  constructor(driver: driverType = defaultDriver) {
+  constructor(driver: { new (): T }) {
     this.setDriver(driver);
   }
 
@@ -16,7 +14,7 @@ export class Payment {
    * @param url
    * @returns Payment
    */
-  setCallbackUrl(url: string): Payment {
+  setCallbackUrl(url: string): Payment<T> {
     this.getDriver().settings.callbackUrl = url;
 
     return this;
@@ -26,8 +24,10 @@ export class Payment {
    *
    * @returns Payment
    */
-  resetCallbackUrl(): Payment {
-    this.setCallbackUrl(driverApis[this.driverName].callbackUrl);
+  resetCallbackUrl(): Payment<T> {
+    this.setCallbackUrl(
+      driverApis[this.getDriver().getInvoice().getDriverName()].callbackUrl,
+    );
 
     return this;
   }
@@ -37,8 +37,8 @@ export class Payment {
    * @param amount
    * @returns Payment
    */
-  setAmount(amount: number): Payment {
-    this.getDriver().invoice.setAmount(amount);
+  setAmount(amount: number): Payment<T> {
+    this.getDriver().getInvoice().setAmount(amount);
 
     return this;
   }
@@ -48,8 +48,8 @@ export class Payment {
    * @param transactionId
    * @returns Payment
    */
-  setTransactionId(transactionId: string): Payment {
-    this.getDriver().invoice.setTransactionId(transactionId);
+  setTransactionId(transactionId: string): Payment<T> {
+    this.getDriver().getInvoice().setTransactionId(transactionId);
 
     return this;
   }
@@ -59,9 +59,8 @@ export class Payment {
    * @param driverName
    * @returns Payment
    */
-  setDriver(driverName: driverType): Payment {
-    this.driverName = driverName;
-    this.driver = new drivers[driverName]();
+  setDriver(driver: new () => T): Payment<T> {
+    this.driver = new driver();
 
     return this;
   }
@@ -70,9 +69,8 @@ export class Payment {
    *
    * @returns Driver
    */
-  getDriver(): Driver {
-    if (this.driver) return this.driver;
-    return this.setDriver(this.driverName).driver;
+  getDriver(): T {
+    return this.driver;
   }
 
   /**
@@ -81,7 +79,7 @@ export class Payment {
    */
   async purchase(
     callback?: (amont: number, transactionId: string, uuid: string) => any,
-  ): Promise<Payment> {
+  ): Promise<Payment<T>> {
     await this.getDriver().purchase();
     await callback(
       this.getDriver().getInvoice().getAmount(),

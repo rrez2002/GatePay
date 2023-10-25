@@ -1,15 +1,4 @@
-import { driverType } from "../contracts/type";
 import { Setting } from "../contracts/interface";
-import { PayIR, Zibal, Zarinpal, Idpay } from "../drivers";
-
-const defaultDriver: driverType = "payir";
-
-const drivers = {
-  payir: PayIR,
-  zibal: Zibal,
-  zarinpal: Zarinpal,
-  idpay: Idpay,
-};
 
 const driverApis: Record<string, Setting> = {
   payir: {
@@ -42,4 +31,4 @@ const driverApis: Record<string, Setting> = {
   },
 };
 
-export { drivers, defaultDriver, driverApis };
+export { driverApis };

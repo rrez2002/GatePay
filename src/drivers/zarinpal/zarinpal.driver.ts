@@ -10,9 +10,10 @@ import {
   VerifyResponseType,
 } from "./zarinpal.type";
 import { driverApis } from "../../config";
+import { CurrencyType } from "../../contracts/type";
 
 export interface ZarinpalDetail extends Detail {
-  currency?: "IRT" | "IRR";
+  currency?: CurrencyType;
 }
 
 export class Zarinpal extends Driver {

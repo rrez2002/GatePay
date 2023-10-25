@@ -45,6 +45,17 @@ export class Payment<T extends Driver> {
 
   /**
    *
+   * @param merchantId
+   * @returns Payment
+   */
+  setMerchantId(merchantId: string): Payment<T> {
+    this.getDriver().settings.merchantId = merchantId;
+
+    return this;
+  }
+
+  /**
+   *
    * @param transactionId
    * @returns Payment
    */

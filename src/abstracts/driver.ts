@@ -1,6 +1,7 @@
 import { Gateway } from "../gateway";
 import { Detail, Setting } from "../contracts/interface";
 import Invoice from "../invoice";
+import axios from "axios";
 
 export abstract class Driver {
   constructor(
@@ -8,6 +9,13 @@ export abstract class Driver {
     public settings: Setting,
     public detail: Detail,
   ) {}
+
+  protected client = axios.create({
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  });
 
   public setInvoice(invoice: Invoice): Driver {
     this.invoice = invoice;

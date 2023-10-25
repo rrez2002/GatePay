@@ -1,6 +1,6 @@
 import Invoice from "../../invoice";
 import { Driver } from "../../abstracts/driver";
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import { Detail, Setting } from "../../contracts/interface";
 import { Gateway } from "../../gateway";
 import {
@@ -12,13 +12,6 @@ import {
 import { driverApis } from "../../config";
 
 export class Zibal extends Driver {
-  private client = axios.create({
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  });
-
   constructor(
     public invoice: Invoice = new Invoice(),
     public settings: Setting = driverApis["zibal"],

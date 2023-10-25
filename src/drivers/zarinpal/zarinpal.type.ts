@@ -1,9 +1,11 @@
+import { CurrencyType } from "../../contracts/type";
+
 export type PurchaseDataType = {
   amount: number;
   merchant_id: string;
   callback_url: string;
   description: string;
-  currency?: "IRT" | "IRR";
+  currency?: CurrencyType;
   metadata: {
     order_id: string;
     mobile: string;

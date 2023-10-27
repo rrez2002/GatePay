@@ -22,7 +22,7 @@ export class Zarinpal extends Driver {
     public settings: Setting = driverApis["zarinpal"],
     public detail: ZarinpalDetail = {},
   ) {
-    super(invoice, settings, detail);
+    super();
     this.invoice.setDriverName("zarinpal");
   }
 

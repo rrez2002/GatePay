@@ -4,11 +4,10 @@ import Invoice from "../invoice";
 import axios from "axios";
 
 export abstract class Driver {
-  constructor(
-    protected invoice: Invoice,
-    public settings: Setting,
-    public detail: Detail,
-  ) {}
+  protected invoice: Invoice;
+  public settings: Setting;
+  public detail: Detail;
+  constructor() {}
 
   protected client = axios.create({
     headers: {

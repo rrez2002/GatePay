@@ -17,7 +17,7 @@ export class Zibal extends Driver {
     public settings: Setting = driverApis["zibal"],
     public detail: Detail = {},
   ) {
-    super(invoice, settings, detail);
+    super();
     this.invoice.setDriverName("zibal");
   }
 

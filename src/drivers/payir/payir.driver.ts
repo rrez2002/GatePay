@@ -21,7 +21,7 @@ export class PayIR extends Driver {
     public settings: Setting = driverApis["payir"],
     public detail: PayIRDetail = {},
   ) {
-    super(invoice, settings, detail);
+    super();
     this.invoice.setDriverName("payir");
   }
 

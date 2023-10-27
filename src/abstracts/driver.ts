@@ -5,7 +5,7 @@ import axios from "axios";
 
 export abstract class Driver {
   constructor(
-    public invoice: Invoice,
+    protected invoice: Invoice,
     public settings: Setting,
     public detail: Detail,
   ) {}

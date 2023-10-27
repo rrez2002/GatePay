@@ -17,7 +17,7 @@ export interface PayIRDetail extends Detail {
 
 export class PayIR extends Driver {
   constructor(
-    public invoice: Invoice = new Invoice(),
+    protected invoice: Invoice = new Invoice(),
     public settings: Setting = driverApis["payir"],
     public detail: PayIRDetail = {},
   ) {

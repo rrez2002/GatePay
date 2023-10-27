@@ -18,7 +18,7 @@ export interface ZarinpalDetail extends Detail {
 
 export class Zarinpal extends Driver {
   constructor(
-    public invoice: Invoice = new Invoice(),
+    protected invoice: Invoice = new Invoice(),
     public settings: Setting = driverApis["zarinpal"],
     public detail: ZarinpalDetail = {},
   ) {

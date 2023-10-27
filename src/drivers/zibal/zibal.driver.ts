@@ -13,7 +13,7 @@ import { driverApis } from "../../config";
 
 export class Zibal extends Driver {
   constructor(
-    public invoice: Invoice = new Invoice(),
+    protected invoice: Invoice = new Invoice(),
     public settings: Setting = driverApis["zibal"],
     public detail: Detail = {},
   ) {

@@ -17,7 +17,7 @@ interface IdpaySetting extends Setting {
 
 export class Idpay extends Driver {
   constructor(
-    public invoice: Invoice = new Invoice(),
+    protected invoice: Invoice = new Invoice(),
     public settings: IdpaySetting = driverApis["idpay"],
     public detail: Detail = {},
   ) {

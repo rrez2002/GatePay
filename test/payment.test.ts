@@ -26,7 +26,6 @@ class Test extends Driver {
     public detail: TestDetail = {},
   ) {
     super();
-    this.invoice.setDriverName("test");
   }
 
   setDetail(detail: TestDetail): Test {
@@ -74,10 +73,6 @@ class Test extends Driver {
 
 describe("payment", () => {
   const payment = new Payment(Test);
-
-  test("shule be test driver name", () => {
-    expect(payment.getDriver().getInvoice().getDriverName()).toBe("test");
-  });
 
   test("shule be amount 10000", () => {
     payment.setAmount(10000);

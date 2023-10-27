@@ -40,12 +40,4 @@ export default class Invoice implements InvoiceInterface {
     this.amount = amount;
     return this;
   }
-
-  setDriverName(driver: string) {
-    this.driver = driver;
-    return this;
-  }
-  getDriverName() {
-    return this.driver;
-  }
 }

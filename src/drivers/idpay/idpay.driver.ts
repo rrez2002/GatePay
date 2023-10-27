@@ -22,7 +22,6 @@ export class Idpay extends Driver {
     public detail: Detail = {},
   ) {
     super();
-    this.invoice.setDriverName("idpay");
   }
 
   setDetail(detail: Detail): Idpay {

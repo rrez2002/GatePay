@@ -18,7 +18,6 @@ export class Zibal extends Driver {
     public detail: Detail = {},
   ) {
     super();
-    this.invoice.setDriverName("zibal");
   }
 
   setDetail(detail: Detail): Zibal {

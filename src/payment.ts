@@ -1,5 +1,4 @@
 import { Driver } from "./abstracts/driver";
-import { driverApis } from "./config";
 import { Gateway } from "./gateway";
 
 export class Payment<T extends Driver> {
@@ -16,18 +15,6 @@ export class Payment<T extends Driver> {
    */
   setCallbackUrl(url: string): Payment<T> {
     this.getDriver().settings.callbackUrl = url;
-
-    return this;
-  }
-
-  /**
-   *
-   * @returns Payment
-   */
-  resetCallbackUrl(): Payment<T> {
-    this.setCallbackUrl(
-      driverApis[this.getDriver().getInvoice().getDriverName()].callbackUrl,
-    );
 
     return this;
   }

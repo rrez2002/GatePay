@@ -21,8 +21,8 @@ export class Zibal extends Driver {
     this.invoice.setDriverName("zibal");
   }
 
-  setDetail(detail: keyof Detail, value: string): Driver {
-    this.detail[detail] = value;
+  setDetail(detail: Detail): Zibal {
+    this.detail = detail;
 
     return this;
   }

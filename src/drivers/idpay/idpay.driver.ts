@@ -25,8 +25,8 @@ export class Idpay extends Driver {
     this.invoice.setDriverName("idpay");
   }
 
-  setDetail(detail: keyof Detail, value: string): Driver {
-    this.detail[detail] = value;
+  setDetail(detail: Detail): Idpay {
+    this.detail = detail;
 
     return this;
   }

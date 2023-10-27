@@ -25,10 +25,14 @@ export class PayIR extends Driver {
     this.invoice.setDriverName("payir");
   }
 
-  setDetail(detail: keyof PayIRDetail, value: string): Driver {
-    this.detail[detail] = value;
+  setDetail(detail: PayIRDetail): Driver {
+    this.detail = detail;
 
     return this;
+  }
+
+  getDetail(): PayIRDetail {
+    return this.detail;
   }
 
   /**

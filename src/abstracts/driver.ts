@@ -27,10 +27,10 @@ export abstract class Driver {
     return this.invoice;
   }
 
-  abstract setDetail(detail: keyof Detail, value: string): Driver;
+  abstract setDetail(detail: Detail): Driver;
 
-  public getDetail() {
-    return this.invoice;
+  getDetail(): Detail {
+    return this.detail;
   }
 
   abstract purchase(): Promise<string>;

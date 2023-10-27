@@ -26,10 +26,14 @@ export class Zarinpal extends Driver {
     this.invoice.setDriverName("zarinpal");
   }
 
-  setDetail(detail: keyof ZarinpalDetail, value: any): Driver {
-    this.detail[detail] = value;
+  setDetail(detail: ZarinpalDetail): Zarinpal {
+    this.detail = detail;
 
     return this;
+  }
+
+  getDetail(): ZarinpalDetail {
+    return this.detail;
   }
 
   /**

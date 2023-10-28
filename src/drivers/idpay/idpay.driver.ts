@@ -1,19 +1,16 @@
 import Invoice from "../../invoice";
 import { Driver } from "../../abstracts/driver";
 import { AxiosError, AxiosResponse } from "axios";
-import { Detail, Setting } from "../../contracts/interface";
+import { Detail } from "../../contracts/interface";
 import { Gateway } from "../../gateway";
 import {
+  IdpaySetting,
   PurchaseDataType,
   PurchaseResponseType,
   VerifyDataType,
   VerifyResponseType,
 } from "./idpay.type";
 import { driverApis } from "../../config";
-
-interface IdpaySetting extends Setting {
-  sandbox?: boolean;
-}
 
 export class Idpay extends Driver {
   constructor(

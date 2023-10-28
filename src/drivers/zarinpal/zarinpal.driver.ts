@@ -1,20 +1,16 @@
 import Invoice from "../../invoice";
 import { Driver } from "../../abstracts/driver";
 import { AxiosError, AxiosResponse } from "axios";
-import { Detail, Setting } from "../../contracts/interface";
+import { Setting } from "../../contracts/interface";
 import { Gateway } from "../../gateway";
 import {
   PurchaseDataType,
   PurchaseResponseType,
   VerifyDataType,
   VerifyResponseType,
+  ZarinpalDetail,
 } from "./zarinpal.type";
 import { driverApis } from "../../config";
-import { CurrencyType } from "../../contracts/type";
-
-export interface ZarinpalDetail extends Detail {
-  currency?: CurrencyType;
-}
 
 export class Zarinpal extends Driver {
   constructor(

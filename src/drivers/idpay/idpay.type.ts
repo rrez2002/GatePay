@@ -1,3 +1,9 @@
+import { Setting } from "../../contracts/interface";
+
+export interface IdpaySetting extends Setting {
+  sandbox?: boolean;
+}
+
 export type PurchaseDataType = {
   amount: number;
   order_id: string;

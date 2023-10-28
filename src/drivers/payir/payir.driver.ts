@@ -1,19 +1,16 @@
 import Invoice from "../../invoice";
 import { Driver } from "../../abstracts/driver";
 import { AxiosError, AxiosResponse } from "axios";
-import { Detail, Setting } from "../../contracts/interface";
+import { Setting } from "../../contracts/interface";
 import { Gateway } from "../../gateway";
 import {
+  PayIRDetail,
   PurchaseDataType,
   PurchaseResponseType,
   VerifyDataType,
   VerifyResponseType,
 } from "./payir.type";
 import { driverApis } from "../../config";
-
-export interface PayIRDetail extends Detail {
-  validCardNumber?: string;
-}
 
 export class PayIR extends Driver {
   constructor(

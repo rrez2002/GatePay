@@ -1,3 +1,9 @@
+import { Detail } from "../../contracts/interface";
+
+export interface PayIRDetail extends Detail {
+  validCardNumber?: string;
+}
+
 export type PurchaseDataType = {
   amount: number;
   api: string;

@@ -1,4 +1,9 @@
+import { Detail } from "../../contracts/interface";
 import { CurrencyType } from "../../contracts/type";
+
+export interface ZarinpalDetail extends Detail {
+  currency?: CurrencyType;
+}
 
 export type PurchaseDataType = {
   amount: number;

@@ -10,12 +10,17 @@ import {
   VerifyDataType,
   VerifyResponseType,
 } from "./payir.type";
-import { driverApis } from "../../config";
 
 export class PayIR extends Driver {
   constructor(
     protected invoice: Invoice = new Invoice(),
-    public settings: Setting = driverApis["payir"],
+    public settings: Setting = {
+      apiPaymentUrl: "https://pay.ir/pg/",
+      apiPurchaseUrl: "https://pay.ir/pg/send",
+      apiVerificationUrl: "https://pay.ir/pg/verify",
+      callbackUrl: "http://yoursite.com/path/to",
+      merchantId: "test",
+    },
     public detail: PayIRDetail = {},
   ) {
     super();

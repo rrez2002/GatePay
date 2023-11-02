@@ -26,7 +26,10 @@ export abstract class Driver {
     return this.invoice;
   }
 
-  abstract setDetail(detail: Detail): Driver;
+  abstract setDetail<T extends keyof Detail>(
+    detail: T,
+    value: Detail[T],
+  ): Driver;
 
   getDetail(): Detail {
     return this.detail;

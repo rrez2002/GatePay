@@ -20,8 +20,8 @@ export class Zibal extends Driver {
     super();
   }
 
-  setDetail(detail: Detail): Zibal {
-    this.detail = detail;
+  setDetail<T extends keyof Detail>(detail: T, value: Detail[T]): Zibal {
+    this.detail[detail] = value;
 
     return this;
   }

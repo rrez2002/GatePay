@@ -28,8 +28,8 @@ class Test extends Driver {
     super();
   }
 
-  setDetail(detail: TestDetail): Test {
-    this.detail = detail;
+  setDetail<T extends keyof TestDetail>(detail: T, value: TestDetail[T]): Test {
+    this.detail[detail] = value;
 
     return this;
   }
@@ -99,9 +99,7 @@ describe("payment", () => {
   });
 
   test("shule be test description", () => {
-    payment.getDriver().setDetail({
-      description: "test",
-    });
+    payment.getDriver().setDetail("description", "test");
 
     console.log(payment.getDriver().getDetail());
 
@@ -109,9 +107,7 @@ describe("payment", () => {
   });
 
   test("shule be set custom detail test ", () => {
-    payment.getDriver().setDetail({
-      test: true,
-    });
+    payment.getDriver().setDetail("test", true);
 
     expect(payment.getDriver().getDetail().test).toBe(true);
   });

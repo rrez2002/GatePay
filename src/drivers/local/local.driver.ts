@@ -20,8 +20,11 @@ export class Local extends Driver {
     super();
   }
 
-  setDetail(detail: LocalDetail): Local {
-    this.detail = detail;
+  setDetail<T extends keyof LocalDetail>(
+    detail: T,
+    value: LocalDetail[T],
+  ): Local {
+    this.detail[detail] = value;
 
     return this;
   }

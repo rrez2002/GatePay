@@ -21,8 +21,8 @@ export class Idpay extends Driver {
     super();
   }
 
-  setDetail(detail: Detail): Idpay {
-    this.detail = detail;
+  setDetail<T extends keyof Detail>(detail: T, value: Detail[T]): Idpay {
+    this.detail[detail] = value;
 
     return this;
   }

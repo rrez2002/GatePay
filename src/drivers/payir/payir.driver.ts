@@ -21,8 +21,11 @@ export class PayIR extends Driver {
     super();
   }
 
-  setDetail(detail: PayIRDetail): Driver {
-    this.detail = detail;
+  setDetail<T extends keyof PayIRDetail>(
+    detail: T,
+    value: PayIRDetail[T],
+  ): PayIR {
+    this.detail[detail] = value;
 
     return this;
   }

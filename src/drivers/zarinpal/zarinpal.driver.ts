@@ -21,8 +21,11 @@ export class Zarinpal extends Driver {
     super();
   }
 
-  setDetail(detail: ZarinpalDetail): Zarinpal {
-    this.detail = detail;
+  setDetail<T extends keyof ZarinpalDetail>(
+    detail: T,
+    value: ZarinpalDetail[T],
+  ): Zarinpal {
+    this.detail[detail] = value;
 
     return this;
   }

@@ -6,17 +6,16 @@ import { LocalDetail, VerifyDataType, VerifyResponseType } from "./local.type";
 import { v4 as uuidv4 } from "uuid";
 
 export class Local extends Driver {
-  constructor(
-    protected invoice: Invoice = new Invoice(),
-    public settings: Setting = {
-      apiPaymentUrl: "",
-      apiPurchaseUrl: "",
-      apiVerificationUrl: "",
-      callbackUrl: "http://localhost:8080/callback",
-      merchantId: "local",
-    },
-    public detail: LocalDetail = {},
-  ) {
+  protected invoice: Invoice = new Invoice();
+  public settings: Setting = {
+    apiPaymentUrl: "",
+    apiPurchaseUrl: "",
+    apiVerificationUrl: "",
+    callbackUrl: "http://localhost:8080/callback",
+    merchantId: "local",
+  };
+  public detail: LocalDetail = {};
+  constructor() {
     super();
   }
 

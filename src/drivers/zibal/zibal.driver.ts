@@ -11,17 +11,16 @@ import {
 } from "./zibal.type";
 
 export class Zibal extends Driver {
-  constructor(
-    protected invoice: Invoice = new Invoice(),
-    public settings: Setting = {
-      apiPaymentUrl: "https://gateway.zibal.ir/start/",
-      apiPurchaseUrl: "https://gateway.zibal.ir/v1/request",
-      apiVerificationUrl: "https://gateway.zibal.ir/v1/verify",
-      callbackUrl: "http://yoursite.com/path/to",
-      merchantId: "zibal",
-    },
-    public detail: Detail = {},
-  ) {
+  protected invoice: Invoice = new Invoice();
+  public settings: Setting = {
+    apiPaymentUrl: "https://gateway.zibal.ir/start/",
+    apiPurchaseUrl: "https://gateway.zibal.ir/v1/request",
+    apiVerificationUrl: "https://gateway.zibal.ir/v1/verify",
+    callbackUrl: "http://yoursite.com/path/to",
+    merchantId: "zibal",
+  };
+  public detail: Detail = {};
+  constructor() {
     super();
   }
 

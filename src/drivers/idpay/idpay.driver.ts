@@ -12,18 +12,17 @@ import {
 } from "./idpay.type";
 
 export class Idpay extends Driver {
-  constructor(
-    protected invoice: Invoice = new Invoice(),
-    public settings: IdpaySetting = {
-      apiPaymentUrl: "https://api.idpay.ir/v1.1/payment/",
-      apiPurchaseUrl: "https://api.idpay.ir/v1.1/payment",
-      apiVerificationUrl: "https://api.idpay.ir/v1.1/payment/verify",
-      callbackUrl: "http://yoursite.com/path/to",
-      merchantId: "7c9c2457-2798-4d42-b2e2-d8db9ff5b298",
-      sandbox: false,
-    },
-    public detail: Detail = {},
-  ) {
+  protected invoice: Invoice = new Invoice();
+  public settings: IdpaySetting = {
+    apiPaymentUrl: "https://api.idpay.ir/v1.1/payment/",
+    apiPurchaseUrl: "https://api.idpay.ir/v1.1/payment",
+    apiVerificationUrl: "https://api.idpay.ir/v1.1/payment/verify",
+    callbackUrl: "http://yoursite.com/path/to",
+    merchantId: "7c9c2457-2798-4d42-b2e2-d8db9ff5b298",
+    sandbox: false,
+  };
+  public detail: Detail = {};
+  constructor() {
     super();
   }
 

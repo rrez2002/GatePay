@@ -12,17 +12,16 @@ import {
 } from "./zarinpal.type";
 
 export class Zarinpal extends Driver {
-  constructor(
-    protected invoice: Invoice = new Invoice(),
-    public settings: Setting = {
-      apiPaymentUrl: "https://www.zarinpal.com/pg/StartPay/",
-      apiPurchaseUrl: "https://api.zarinpal.com/pg/v4/payment/request.json",
-      apiVerificationUrl: "https://api.zarinpal.com/pg/v4/payment/verify.json",
-      callbackUrl: "http://yoursite.com/path/to",
-      merchantId: "",
-    },
-    public detail: ZarinpalDetail = {},
-  ) {
+  protected invoice: Invoice = new Invoice();
+  public settings: Setting = {
+    apiPaymentUrl: "https://www.zarinpal.com/pg/StartPay/",
+    apiPurchaseUrl: "https://api.zarinpal.com/pg/v4/payment/request.json",
+    apiVerificationUrl: "https://api.zarinpal.com/pg/v4/payment/verify.json",
+    callbackUrl: "http://yoursite.com/path/to",
+    merchantId: "",
+  };
+  public detail: ZarinpalDetail = {};
+  constructor() {
     super();
   }
 

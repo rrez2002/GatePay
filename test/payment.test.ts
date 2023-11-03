@@ -13,18 +13,17 @@ export interface TestDetail extends Detail {
 }
 
 class Test extends Driver {
-  constructor(
-    protected invoice: Invoice = new Invoice(),
-    public settings: TestSetting = {
+  protected invoice: Invoice = new Invoice();
+  public settings: TestSetting = {
       apiPaymentUrl: "",
       apiPurchaseUrl: "",
       apiVerificationUrl: "",
       callbackUrl: "",
       merchantId: "",
       test: false,
-    },
-    public detail: TestDetail = {},
-  ) {
+  };
+  public detail: TestDetail = {};
+  constructor() {
     super();
   }
 

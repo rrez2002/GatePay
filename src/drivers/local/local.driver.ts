@@ -1,6 +1,7 @@
 import Invoice from "../../invoice";
 import { Driver } from "../../abstracts/driver";
 import { Setting } from "../../contracts/interface";
+import { generateFakeCardNumber } from "../../contracts/utility";
 import { Gateway } from "../../gateway";
 import { LocalDetail, VerifyDataType, VerifyResponseType } from "./local.type";
 import { v4 as uuidv4 } from "uuid";
@@ -73,7 +74,7 @@ export class Local extends Driver {
       orderId: this.invoice.getUuid(),
       traceNo: uuidv4(),
       referenceNo: this.invoice.getTransactionId(),
-      cardNo: "",
+      cardNo: generateFakeCardNumber(),
     };
   }
 

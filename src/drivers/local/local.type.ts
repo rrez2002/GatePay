@@ -1,6 +1,6 @@
-import { Detail } from "../../contracts/interface";
+import { DetailInterface } from "../../contracts/interface";
 
-export interface LocalDetail extends Detail {
+export interface LocalDetail extends DetailInterface {
   failedPurchase?: boolean;
   cancel?: boolean;
 }

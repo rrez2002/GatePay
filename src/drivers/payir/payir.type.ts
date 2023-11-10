@@ -1,6 +1,6 @@
-import { Detail } from "../../contracts/interface";
+import { DetailInterface } from "../../contracts/interface";
 
-export interface PayIRDetail extends Detail {
+export interface PayIRDetail extends DetailInterface {
   validCardNumber?: string;
 }
 

@@ -11,8 +11,7 @@ import {
   ZarinpalDetail,
 } from "./zarinpal.type";
 
-export class Zarinpal extends Driver {
-  protected invoice: Invoice = new Invoice();
+export class Zarinpal extends Driver<Invoice<ZarinpalDetail>> {
   public settings: Setting = {
     apiPaymentUrl: "https://www.zarinpal.com/pg/StartPay/",
     apiPurchaseUrl: "https://api.zarinpal.com/pg/v4/payment/request.json",
@@ -20,22 +19,8 @@ export class Zarinpal extends Driver {
     callbackUrl: "http://yoursite.com/path/to",
     merchantId: "",
   };
-  public detail: ZarinpalDetail = {};
   constructor() {
-    super();
-  }
-
-  setDetail<T extends keyof ZarinpalDetail>(
-    detail: T,
-    value: ZarinpalDetail[T],
-  ): Zarinpal {
-    this.detail[detail] = value;
-
-    return this;
-  }
-
-  getDetail(): ZarinpalDetail {
-    return this.detail;
+    super(new Invoice());
   }
 
   /**
@@ -44,15 +29,15 @@ export class Zarinpal extends Driver {
   async purchase(): Promise<string> {
     try {
       let data: PurchaseDataType = {
-        amount: this.invoice.getAmount(),
+        amount: this.getInvoice().getAmount(),
         merchant_id: this.settings.merchantId,
         callback_url: this.settings.callbackUrl,
-        description: this.detail.description,
-        currency: this.detail.currency,
+        description: this.getInvoice().getDetail().description,
+        currency: this.getInvoice().getDetail().currency,
         metadata: {
-          order_id: this.invoice.getUuid(),
-          mobile: this.detail.phone,
-          email: this.detail.email,
+          order_id: this.getInvoice().getUuid(),
+          mobile: this.getInvoice().getDetail().phone,
+          email: this.getInvoice().getDetail().email,
         },
       };
 
@@ -63,9 +48,9 @@ export class Zarinpal extends Driver {
         throw this.translateStatus(response.data.code);
       }
 
-      this.invoice.setTransactionId(response.data.authority);
+      this.getInvoice().setTransactionId(response.data.authority);
 
-      return this.invoice.getTransactionId();
+      return this.getInvoice().getTransactionId();
     } catch (error: any) {
       if (error instanceof AxiosError) {
         throw this.translateStatus(error.response.data.code);
@@ -80,7 +65,7 @@ export class Zarinpal extends Driver {
   pay(): Gateway {
     const payUrl = `${
       this.settings.apiPaymentUrl
-    }${this.invoice.getTransactionId()}`;
+    }${this.getInvoice().getTransactionId()}`;
 
     return new Gateway(payUrl, "GET");
   }
@@ -91,9 +76,9 @@ export class Zarinpal extends Driver {
   async verify(): Promise<VerifyResponseType> {
     try {
       let data: VerifyDataType = {
-        authority: this.invoice.getTransactionId(),
+        authority: this.getInvoice().getTransactionId(),
         merchant_id: this.settings.merchantId,
-        amount: this.invoice.getAmount(),
+        amount: this.getInvoice().getAmount(),
       };
 
       const response: AxiosResponse<VerifyResponseType, VerifyDataType> =

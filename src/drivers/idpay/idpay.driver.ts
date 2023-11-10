@@ -1,7 +1,6 @@
 import Invoice from "../../invoice";
 import { Driver } from "../../abstracts/driver";
 import { AxiosError, AxiosResponse } from "axios";
-import { Detail } from "../../contracts/interface";
 import { Gateway } from "../../gateway";
 import {
   IdpaySetting,
@@ -10,9 +9,9 @@ import {
   VerifyDataType,
   VerifyResponseType,
 } from "./idpay.type";
+import { DetailInterface } from "../../contracts/interface";
 
-export class Idpay extends Driver {
-  protected invoice: Invoice = new Invoice();
+export class Idpay extends Driver<Invoice<DetailInterface>> {
   public settings: IdpaySetting = {
     apiPaymentUrl: "https://api.idpay.ir/v1.1/payment/",
     apiPurchaseUrl: "https://api.idpay.ir/v1.1/payment",
@@ -21,16 +20,10 @@ export class Idpay extends Driver {
     merchantId: "7c9c2457-2798-4d42-b2e2-d8db9ff5b298",
     sandbox: false,
   };
-  public detail: Detail = {};
   constructor() {
-    super();
+    super(new Invoice());
   }
 
-  setDetail<T extends keyof Detail>(detail: T, value: Detail[T]): Idpay {
-    this.detail[detail] = value;
-
-    return this;
-  }
 
   /**
    *
@@ -38,13 +31,13 @@ export class Idpay extends Driver {
   async purchase(): Promise<string> {
     try {
       let data: PurchaseDataType = {
-        amount: this.invoice.getAmount(),
+        amount: this.getInvoice().getAmount(),
         callback: this.settings.callbackUrl,
-        desc: this.detail.description,
-        order_id: this.invoice.getUuid(),
-        name: this.detail.name,
-        phone: this.detail.phone,
-        mail: this.detail.email,
+        desc: this.getInvoice().getDetail().description,
+        order_id: this.getInvoice().getUuid(),
+        name:  this.getInvoice().getDetail().name,
+        phone: this.getInvoice().getDetail().phone,
+        mail: this.getInvoice().getDetail().email,
       };
 
       const headers = {
@@ -90,8 +83,8 @@ export class Idpay extends Driver {
       };
 
       let data: VerifyDataType = {
-        id: this.invoice.getTransactionId(),
-        order_id: this.invoice.getUuid(),
+        id: this.getInvoice().getTransactionId(),
+        order_id: this.getInvoice().getUuid(),
       };
 
       const response: AxiosResponse<VerifyResponseType, VerifyDataType> =

@@ -11,9 +11,8 @@ import {
   VerifyResponseType,
 } from "./payir.type";
 
-export class PayIR extends Driver {
+export class PayIR extends Driver<Invoice<PayIRDetail>> {
   constructor(
-    protected invoice: Invoice = new Invoice(),
     public settings: Setting = {
       apiPaymentUrl: "https://pay.ir/pg/",
       apiPurchaseUrl: "https://pay.ir/pg/send",
@@ -21,22 +20,8 @@ export class PayIR extends Driver {
       callbackUrl: "http://yoursite.com/path/to",
       merchantId: "test",
     },
-    public detail: PayIRDetail = {},
   ) {
-    super();
-  }
-
-  setDetail<T extends keyof PayIRDetail>(
-    detail: T,
-    value: PayIRDetail[T],
-  ): PayIR {
-    this.detail[detail] = value;
-
-    return this;
-  }
-
-  getDetail(): PayIRDetail {
-    return this.detail;
+    super(new Invoice());
   }
 
   /**
@@ -45,13 +30,13 @@ export class PayIR extends Driver {
   async purchase(): Promise<string> {
     try {
       let data: PurchaseDataType = {
-        amount: this.invoice.getAmount(),
+        amount: this.getInvoice().getAmount(),
         api: this.settings.merchantId,
         redirect: this.settings.callbackUrl,
-        description: this.detail.description,
-        factorNumber: this.invoice.getUuid(),
-        mobile: this.detail.phone,
-        validCardNumber: this.detail.validCardNumber,
+        description: this.getInvoice().getDetail().description,
+        factorNumber: this.getInvoice().getUuid(),
+        mobile: this.getInvoice().getDetail().phone,
+        validCardNumber: this.getInvoice().getDetail().validCardNumber,
       };
 
       const response: AxiosResponse<PurchaseResponseType, PurchaseDataType> =
@@ -61,9 +46,9 @@ export class PayIR extends Driver {
         throw this.translateStatus(response.data.status);
       }
 
-      this.invoice.setTransactionId(response.data.token);
+      this.getInvoice().setTransactionId(response.data.token);
 
-      return this.invoice.getTransactionId();
+      return this.getInvoice().getTransactionId();
     } catch (error: any) {
       if (error instanceof AxiosError) {
         throw this.translateStatus(error.response.data.status);
@@ -78,7 +63,7 @@ export class PayIR extends Driver {
   pay(): Gateway {
     const payUrl = `${
       this.settings.apiPaymentUrl
-    }${this.invoice.getTransactionId()}`;
+    }${this.getInvoice().getTransactionId()}`;
 
     return new Gateway(payUrl, "GET");
   }
@@ -89,7 +74,7 @@ export class PayIR extends Driver {
   async verify(): Promise<VerifyResponseType> {
     try {
       let data: VerifyDataType = {
-        token: this.invoice.getTransactionId(),
+        token: this.getInvoice().getTransactionId(),
         api: this.settings.merchantId,
       };
 
@@ -98,7 +83,7 @@ export class PayIR extends Driver {
 
       if (
         response.data.status != "1" ||
-        response.data.amount != this.invoice.getAmount().toString()
+        response.data.amount != this.getInvoice().getAmount().toString()
       ) {
         throw this.translateStatus(response.data.status);
       }

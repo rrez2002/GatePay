@@ -1,7 +1,7 @@
-import { Detail } from "../../contracts/interface";
+import { DetailInterface } from "../../contracts/interface";
 import { CurrencyType } from "../../contracts/type";
 
-export interface ZarinpalDetail extends Detail {
+export interface ZarinpalDetail extends DetailInterface {
   currency?: CurrencyType;
 }
 

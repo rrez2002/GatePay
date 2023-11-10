@@ -1,7 +1,7 @@
 import Invoice from "../../invoice";
 import { Driver } from "../../abstracts/driver";
 import { AxiosResponse } from "axios";
-import { Detail, Setting } from "../../contracts/interface";
+import { DetailInterface, Setting } from "../../contracts/interface";
 import { Gateway } from "../../gateway";
 import {
   PurchaseDataType,
@@ -10,8 +10,7 @@ import {
   VerifyResponseType,
 } from "./zibal.type";
 
-export class Zibal extends Driver {
-  protected invoice: Invoice = new Invoice();
+export class Zibal extends Driver<Invoice<DetailInterface>> {
   public settings: Setting = {
     apiPaymentUrl: "https://gateway.zibal.ir/start/",
     apiPurchaseUrl: "https://gateway.zibal.ir/v1/request",
@@ -19,15 +18,8 @@ export class Zibal extends Driver {
     callbackUrl: "http://yoursite.com/path/to",
     merchantId: "zibal",
   };
-  public detail: Detail = {};
   constructor() {
-    super();
-  }
-
-  setDetail<T extends keyof Detail>(detail: T, value: Detail[T]): Zibal {
-    this.detail[detail] = value;
-
-    return this;
+    super(new Invoice());
   }
 
   /**
@@ -36,12 +28,12 @@ export class Zibal extends Driver {
   async purchase(): Promise<string> {
     try {
       let data: PurchaseDataType = {
-        amount: this.invoice.getAmount(),
+        amount: this.getInvoice().getAmount(),
         merchant: this.settings.merchantId,
         callbackUrl: this.settings.callbackUrl,
-        description: this.detail.description,
-        orderId: this.invoice.getUuid(),
-        mobile: this.detail.phone,
+        description: this.getInvoice().getDetail().description,
+        orderId: this.getInvoice().getUuid(),
+        mobile: this.getInvoice().getDetail().phone,
       };
 
       const response: AxiosResponse<PurchaseResponseType, PurchaseDataType> =

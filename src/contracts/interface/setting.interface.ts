@@ -5,10 +5,3 @@ export interface Setting {
   callbackUrl: string;
   merchantId: string;
 }
-
-export interface Detail {
-  name?: string;
-  phone?: string;
-  email?: string;
-  description?: string;
-}

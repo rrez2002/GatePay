@@ -1,13 +1,17 @@
 import Invoice from "../../invoice";
+import { DetailInterface } from "./";
 
-export interface InvoiceInterface {
+export interface InvoiceInterface<D extends DetailInterface> {
   uuid: string;
   transactionId: string;
   amount: number;
-  setUuid(uuid: string): Invoice;
+  details: Partial<D>
+  setUuid(uuid: string): Invoice<D>;
   getUuid(): string;
-  setTransactionId(transactionId: string): Invoice;
+  setTransactionId(transactionId: string): Invoice<D>;
   getTransactionId(): string;
-  setAmount(amount: number): Invoice;
+  setAmount(amount: number): Invoice<any>;
   getAmount(): number;
+  setDetail<T extends keyof D>(detail: T, value: D[T]): Invoice<D> 
+  getDetail(): Partial<D>
 }

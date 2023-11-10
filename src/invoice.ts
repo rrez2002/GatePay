@@ -1,11 +1,12 @@
-import { InvoiceInterface } from "./contracts/interface";
+import { DetailInterface, InvoiceInterface } from "./contracts/interface";
 import { v4 as uuidv4 } from "uuid";
 
-export default class Invoice implements InvoiceInterface {
+export default class Invoice<D extends DetailInterface> implements InvoiceInterface<D> {
   uuid: string;
   transactionId: string;
   driver: string;
   amount: number = 0;
+  details: Partial<D> = {};
 
   constructor() {
     this.setUuid();
@@ -39,5 +40,15 @@ export default class Invoice implements InvoiceInterface {
   setAmount(amount: number) {
     this.amount = amount;
     return this;
+  }
+
+  setDetail<T extends keyof D>(detail: T, value: D[T]): Invoice<D> {
+    this.details[detail] = value;
+
+    return this;
+  }
+
+  getDetail(): Partial<D> {
+    return this.details;
   }
 }

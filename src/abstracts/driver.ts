@@ -1,13 +1,14 @@
 import { Gateway } from "../gateway";
-import { Detail, Setting } from "../contracts/interface";
+import { Setting } from "../contracts/interface";
 import Invoice from "../invoice";
 import axios from "axios";
 
-export abstract class Driver {
-  protected invoice: Invoice;
+export abstract class Driver<T extends Invoice<any>> {
+  protected invoice: T;
   public settings: Setting;
-  public detail: Detail;
-  constructor() {}
+  constructor(invoice: T) {
+    this.invoice = invoice
+  }
 
   protected client = axios.create({
     headers: {
@@ -16,23 +17,14 @@ export abstract class Driver {
     },
   });
 
-  public setInvoice(invoice: Invoice): Driver {
+  public setInvoice(invoice: T): Driver<T> {
     this.invoice = invoice;
 
     return this;
   }
 
-  public getInvoice() {
+  public getInvoice(): T {
     return this.invoice;
-  }
-
-  abstract setDetail<T extends keyof Detail>(
-    detail: T,
-    value: Detail[T],
-  ): Driver;
-
-  getDetail(): Detail {
-    return this.detail;
   }
 
   abstract purchase(): Promise<string>;

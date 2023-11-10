@@ -1,7 +1,7 @@
 import { Driver } from "./abstracts/driver";
 import { Gateway } from "./gateway";
 
-export class Payment<T extends Driver> {
+export class Payment<T extends Driver<any>> {
   protected driver: T;
 
   constructor(driver: { new (): T }) {

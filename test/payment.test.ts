@@ -1,5 +1,5 @@
 import { Driver } from "../src/abstracts/driver";
-import { Detail, Setting } from "../src/contracts/interface";
+import { DetailInterface, Setting } from "../src/contracts/interface";
 import { Gateway } from "../src/gateway";
 import Invoice from "../src/invoice";
 import { Payment } from "../src/payment";
@@ -8,12 +8,11 @@ interface TestSetting extends Setting {
   test?: boolean;
 }
 
-export interface TestDetail extends Detail {
+export interface TestDetail extends DetailInterface {
   test?: boolean;
 }
 
-class Test extends Driver {
-  protected invoice: Invoice = new Invoice();
+class Test extends Driver<Invoice<TestDetail>> {
   public settings: TestSetting = {
       apiPaymentUrl: "",
       apiPurchaseUrl: "",
@@ -22,19 +21,8 @@ class Test extends Driver {
       merchantId: "",
       test: false,
   };
-  public detail: TestDetail = {};
   constructor() {
-    super();
-  }
-
-  setDetail<T extends keyof TestDetail>(detail: T, value: TestDetail[T]): Test {
-    this.detail[detail] = value;
-
-    return this;
-  }
-
-  getDetail(): TestDetail {
-    return this.detail;
+    super(new Invoice());
   }
 
   /**
@@ -98,17 +86,15 @@ describe("payment", () => {
   });
 
   test("shule be test description", () => {
-    payment.getDriver().setDetail("description", "test");
+    payment.getDriver().getInvoice().setDetail("description", "test");
 
-    console.log(payment.getDriver().getDetail());
-
-    expect(payment.getDriver().getDetail().description).toBe("test");
+    expect(payment.getDriver().getInvoice().getDetail().description).toBe("test");
   });
 
   test("shule be set custom detail test ", () => {
-    payment.getDriver().setDetail("test", true);
+    payment.getDriver().getInvoice().setDetail("test", true);
 
-    expect(payment.getDriver().getDetail().test).toBe(true);
+    expect(payment.getDriver().getInvoice().getDetail().test).toBe(true);
   });
 
   test("shule be test transactionId", () => {

@@ -1,1 +1,113 @@
-# GatePay
+# Typescript Payment Gateway
+
+# List of contents
+
+- [Typescript Payment Gateway](#typescript-payment-gateway)
+- [List of contents](#list-of-contents)
+- [List of available drivers](#list-of-available-drivers)
+  - [Install](#install)
+  - [How to use](#how-to-use)
+    - [Working with invoices](#working-with-invoices)
+    - [Purchase invoice](#purchase-invoice)
+    - [Pay invoice](#pay-invoice)
+    - [Verify payment](#verify-payment)
+    - [Useful methods](#useful-methods)
+    - [Create custom drivers:](#create-custom-drivers)
+  - [Local driver (for development)](#local-driver)
+  - [Change log](#change-log)
+  - [Contributing](#contributing)
+  - [Security](#security)
+  - [Credits](#credits)
+  - [License](#license)
+
+
+  # List of available drivers
+- [idpay](https://idpay.ir/) :heavy_check_mark:
+- [payir](https://pay.ir/) :heavy_check_mark:
+- [payping](https://www.payping.ir/) (will be added soon in next version)
+- [zarinpal](https://www.zarinpal.com/) :heavy_check_mark:
+- [zibal](https://www.zibal.ir/) :heavy_check_mark:
+- [local](#local-driver) :heavy_check_mark:
+- Others are under way.
+
+> you can create your own custom drivers if it doesn't exist in the list, read the `Create custom drivers` section.
+
+## Install
+
+```bash
+$ npm install gatepay
+```
+
+## How to use
+
+
+In your code, use it like the below:
+
+```typescript
+  // Create new Instance.
+  const payment = new Payment(Driver);
+
+  // Set merchantId.
+  payment.setMerchantId("merchantId");
+  // Set invoice amount.
+  payment.setAmount(10000);
+  //Add invoice details.
+  payment.getDriver().setDetail("detail", "value");
+
+  //or 
+
+  // Create new invoice.
+  const invoice = new Invoice()
+  // Set invoice amount.
+  invoice.setAmount(10000)
+  // Set invoice details.
+  invoice.setDetail("detail", "value")
+  // Set invoice.
+  payment.getDriver().setInvoice(invoice);
+
+```
+
+## Purchase invoice
+In order to pay the invoice, we need the payment transactionId. We purchase the invoice to retrieve transaction id:
+
+```typescript
+  // Purchase method accepts a callback function.
+  payment
+    .purchase((amont: number, transactionId: string, uuid: string) => {
+      // We can store transactionId in database
+    })
+```
+
+## Pay invoice
+
+```typescript
+  // Retrieve json format of Redirection (in this case you can handle redirection to bank gateway)
+  payment
+  .purchase((amont: number, transactionId: string, uuid: string) => {
+    // Store transactionId in database.
+    // We need the transactionId to verify payment in the future.
+  })
+  .then((res) => {
+    return res.pay().toJson();
+  });
+```
+
+## Verify payment
+
+```typescript
+  // You need to verify the payment to ensure the invoice has been paid successfully.
+  // We use transaction id to verify payments
+  // It is a good practice to add invoice amount as well.
+  try {
+    const receipt = await payment.setTransactionId(transactionId).verify();
+
+    // You can show payment referenceId to the user.
+    receipt.getReferenceId()
+    
+  } catch (error) {
+    // when payment is not verified, it will throw an exception.
+
+    console.log(error);
+  }
+
+```

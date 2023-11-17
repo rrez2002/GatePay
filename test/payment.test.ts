@@ -14,10 +14,10 @@ export interface TestDetail extends DetailInterface {
 
 class Test extends Driver<Invoice<TestDetail>> {
   public settings: TestSetting = {
-      apiPaymentUrl: "",
-      apiPurchaseUrl: "",
-      apiVerificationUrl: "",
-      callbackUrl: "",
+      apiPaymentUrl: "http://api.test.com/payment",
+      apiPurchaseUrl: "http://api.test.com/purchase",
+      apiVerificationUrl: "http://api.test.com/verify",
+      callbackUrl: "http://callback.test.com",
       merchantId: "",
       test: false,
   };
@@ -118,5 +118,15 @@ describe("payment", () => {
       expect(payment.getDriver().getInvoice().getUuid()).toBe(uuid);
       expect(payment.getDriver().getInvoice().getAmount()).toBe(amont);
     });
+  });
+
+  test("shule be valid payment data", async() => {
+    await payment.purchase(() => {});
+    let payData = payment.pay().toJson()
+    expect(payData.method).toBe("GET");
+    expect(payData.url).toBe(`${
+      payment.getDriver().settings.apiPaymentUrl
+    }${payment.getDriver().getInvoice().getTransactionId()}`);
+
   });
 });

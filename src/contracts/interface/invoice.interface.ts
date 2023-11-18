@@ -10,7 +10,7 @@ export interface InvoiceInterface<D extends DetailInterface> {
   getUuid(): string;
   setTransactionId(transactionId: string): Invoice<D>;
   getTransactionId(): string;
-  setAmount(amount: number): Invoice<any>;
+  setAmount(amount: number): Invoice<D>;
   getAmount(): number;
   setDetail<T extends keyof D>(detail: T, value: D[T]): Invoice<D> 
   getDetail(): Partial<D>

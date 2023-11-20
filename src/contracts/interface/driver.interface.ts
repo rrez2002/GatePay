@@ -1,5 +1,5 @@
 import Invoice from "../../invoice";
-import { Driver } from "../../abstracts/driver";
+import { Driver } from "../../abstracts";
 import { Setting } from "./";
 
 export interface DriverInterface {

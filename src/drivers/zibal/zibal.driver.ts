@@ -1,5 +1,5 @@
 import Invoice from "../../invoice";
-import { Driver } from "../../abstracts/driver";
+import { Driver } from "../../abstracts";
 import { AxiosResponse } from "axios";
 import { DetailInterface, Setting } from "../../contracts/interface";
 import { Gateway } from "../../gateway";

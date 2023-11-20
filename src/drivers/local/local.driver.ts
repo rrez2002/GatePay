@@ -3,8 +3,9 @@ import { Driver } from "../../abstracts/driver";
 import { Setting } from "../../contracts/interface";
 import { generateFakeCardNumber } from "../../contracts/utility";
 import { Gateway } from "../../gateway";
-import { LocalDetail, VerifyDataType, VerifyResponseType } from "./local.type";
+import { LocalDetail, VerifyDataType } from "./local.type";
 import { v4 as uuidv4 } from "uuid";
+import { LocalReceipt } from "./local.receipt";
 
 export class Local extends Driver<Invoice<LocalDetail>> {
   public settings: Setting = {
@@ -45,7 +46,7 @@ export class Local extends Driver<Invoice<LocalDetail>> {
   /**
    *
    */
-  async verify(): Promise<VerifyResponseType> {
+  async verify(): Promise<LocalReceipt> {
     let data: VerifyDataType = {
       transactionId: this.getInvoice().getTransactionId(),
       cancel: this.getInvoice().getDetail().cancel,
@@ -55,12 +56,12 @@ export class Local extends Driver<Invoice<LocalDetail>> {
       throw this.translateStatus("0");
     }
 
-    return {
+    return new LocalReceipt(this.getInvoice().getTransactionId(), {
       orderId: this.getInvoice().getUuid(),
       traceNo: uuidv4(),
       referenceNo: this.getInvoice().getTransactionId(),
       cardNo: generateFakeCardNumber(),
-    };
+    });
   }
 
   private translateStatus(status: string) {

@@ -9,6 +9,7 @@ import {
   VerifyDataType,
   VerifyResponseType,
 } from "./zibal.type";
+import { ZibalReceipt } from "./zibal.receipt";
 
 export class Zibal extends Driver<Invoice<DetailInterface>> {
   public settings: Setting = {
@@ -65,7 +66,7 @@ export class Zibal extends Driver<Invoice<DetailInterface>> {
   /**
    *
    */
-  async verify(): Promise<VerifyResponseType> {
+  async verify(): Promise<ZibalReceipt> {
     try {
       let data: VerifyDataType = {
         trackId: this.invoice.getTransactionId(),
@@ -82,7 +83,7 @@ export class Zibal extends Driver<Invoice<DetailInterface>> {
         throw this.translateStatus(response.data.result);
       }
 
-      return response.data;
+      return new ZibalReceipt(response.data.orderId, response.data);
     } catch (error: any) {
       throw error;
     }

@@ -133,4 +133,11 @@ describe("payment", () => {
     }${payment.getDriver().getInvoice().getTransactionId()}`);
 
   });
+
+  test("verfy peyment", async() => {
+    let receipt: TestReceipt = await payment.verify()
+    expect(receipt.getReferenceId()).toBe(payment.getDriver().getInvoice().getTransactionId());
+    expect(receipt.getData().order_id).toBe(payment.getDriver().getInvoice().getUuid());
+
+  });
 });

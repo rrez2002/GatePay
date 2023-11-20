@@ -10,6 +10,7 @@ import {
   VerifyResponseType,
 } from "./idpay.type";
 import { DetailInterface } from "../../contracts/interface";
+import { IdpayReceipt } from "./idpay.receipt";
 
 export class Idpay extends Driver<Invoice<DetailInterface>> {
   public settings: IdpaySetting = {
@@ -23,7 +24,6 @@ export class Idpay extends Driver<Invoice<DetailInterface>> {
   constructor() {
     super(new Invoice());
   }
-
 
   /**
    *
@@ -75,7 +75,7 @@ export class Idpay extends Driver<Invoice<DetailInterface>> {
   /**
    *
    */
-  async verify(): Promise<VerifyResponseType> {
+  async verify(): Promise<IdpayReceipt> {
     try {
       const headers = {
         "X-API-KEY": this.settings.merchantId,
@@ -92,7 +92,7 @@ export class Idpay extends Driver<Invoice<DetailInterface>> {
           headers,
         });
 
-      return response.data;
+      return new IdpayReceipt(response.data.track_id.toString(), response.data);
     } catch (error: any) {
       if (error instanceof AxiosError) {
         throw this.translateStatus(error.response.data.error_code);

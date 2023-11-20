@@ -1,5 +1,5 @@
 export interface ReceiptInterface<T> {
-    getReferenceId(): string,
-    getData(): T,
-    getDate(): Date,
+  getReferenceId(): string;
+  getData(): T;
+  getDate(): Date;
 }

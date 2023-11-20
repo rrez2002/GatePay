@@ -1,7 +1,9 @@
 import { DetailInterface, InvoiceInterface } from "./contracts/interface";
 import { v4 as uuidv4 } from "uuid";
 
-export default class Invoice<D extends DetailInterface> implements InvoiceInterface<D> {
+export default class Invoice<D extends DetailInterface>
+  implements InvoiceInterface<D>
+{
   uuid: string;
   transactionId: string;
   driver: string;

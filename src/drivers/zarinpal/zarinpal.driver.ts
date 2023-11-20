@@ -12,7 +12,6 @@ import {
 } from "./zarinpal.type";
 import { ZarinpalReceipt } from "./zarinpal.receipt";
 
-
 export class Zarinpal extends Driver<Invoice<ZarinpalDetail>> {
   public settings: Setting = {
     apiPaymentUrl: "https://www.zarinpal.com/pg/StartPay/",

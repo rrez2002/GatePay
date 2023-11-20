@@ -5,13 +5,13 @@ export interface InvoiceInterface<D extends DetailInterface> {
   uuid: string;
   transactionId: string;
   amount: number;
-  details: Partial<D>
+  details: Partial<D>;
   setUuid(uuid: string): Invoice<D>;
   getUuid(): string;
   setTransactionId(transactionId: string): Invoice<D>;
   getTransactionId(): string;
   setAmount(amount: number): Invoice<D>;
   getAmount(): number;
-  setDetail<T extends keyof D>(detail: T, value: D[T]): Invoice<D> 
-  getDetail(): Partial<D>
+  setDetail<T extends keyof D>(detail: T, value: D[T]): Invoice<D>;
+  getDetail(): Partial<D>;
 }

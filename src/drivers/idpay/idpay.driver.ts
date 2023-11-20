@@ -35,7 +35,7 @@ export class Idpay extends Driver<Invoice<DetailInterface>> {
         callback: this.settings.callbackUrl,
         desc: this.getInvoice().getDetail().description,
         order_id: this.getInvoice().getUuid(),
-        name:  this.getInvoice().getDetail().name,
+        name: this.getInvoice().getDetail().name,
         phone: this.getInvoice().getDetail().phone,
         mail: this.getInvoice().getDetail().email,
       };

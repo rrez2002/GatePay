@@ -8,7 +8,7 @@ export abstract class Driver<T extends Invoice<any>> {
   protected invoice: T;
   public settings: Setting;
   constructor(invoice: T) {
-    this.invoice = invoice
+    this.invoice = invoice;
   }
 
   protected client = axios.create({

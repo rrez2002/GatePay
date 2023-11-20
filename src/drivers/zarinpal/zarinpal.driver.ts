@@ -10,6 +10,8 @@ import {
   VerifyResponseType,
   ZarinpalDetail,
 } from "./zarinpal.type";
+import { ZarinpalReceipt } from "./zarinpal.receipt";
+
 
 export class Zarinpal extends Driver<Invoice<ZarinpalDetail>> {
   public settings: Setting = {
@@ -73,7 +75,7 @@ export class Zarinpal extends Driver<Invoice<ZarinpalDetail>> {
   /**
    *
    */
-  async verify(): Promise<VerifyResponseType> {
+  async verify(): Promise<ZarinpalReceipt> {
     try {
       let data: VerifyDataType = {
         authority: this.getInvoice().getTransactionId(),
@@ -88,7 +90,7 @@ export class Zarinpal extends Driver<Invoice<ZarinpalDetail>> {
         throw this.translateStatus(response.data.code);
       }
 
-      return response.data;
+      return new ZarinpalReceipt(response.data.ref_id, response.data);
     } catch (error: any) {
       if (error instanceof AxiosError) {
         throw this.translateStatus(error.response.data.status);

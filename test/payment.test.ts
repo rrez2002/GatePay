@@ -1,4 +1,4 @@
-import { Driver } from "../src/abstracts/driver";
+import { Driver, Receipt } from "../src/abstracts";
 import { DetailInterface, Setting } from "../src/contracts/interface";
 import { Gateway } from "../src/gateway";
 import Invoice from "../src/invoice";
@@ -11,6 +11,10 @@ interface TestSetting extends Setting {
 export interface TestDetail extends DetailInterface {
   test?: boolean;
 }
+
+type VerifyResponseType = {id: string, order_id: string}
+
+class TestReceipt extends Receipt<VerifyResponseType> {}
 
 class Test extends Driver<Invoice<TestDetail>> {
   public settings: TestSetting = {
@@ -48,13 +52,13 @@ class Test extends Driver<Invoice<TestDetail>> {
   /**
    *
    */
-  async verify() {
+  async verify(): Promise<TestReceipt> {
     let data = {
       id: this.invoice.getTransactionId(),
       order_id: this.invoice.getUuid(),
     };
 
-    return data;
+    return new TestReceipt(data.id, data);
   }
 }
 

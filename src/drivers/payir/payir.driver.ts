@@ -10,6 +10,7 @@ import {
   VerifyDataType,
   VerifyResponseType,
 } from "./payir.type";
+import { PayIRReceipt } from "./payir.receipt";
 
 export class PayIR extends Driver<Invoice<PayIRDetail>> {
   constructor(
@@ -71,7 +72,7 @@ export class PayIR extends Driver<Invoice<PayIRDetail>> {
   /**
    *
    */
-  async verify(): Promise<VerifyResponseType> {
+  async verify(): Promise<PayIRReceipt> {
     try {
       let data: VerifyDataType = {
         token: this.getInvoice().getTransactionId(),
@@ -88,7 +89,7 @@ export class PayIR extends Driver<Invoice<PayIRDetail>> {
         throw this.translateStatus(response.data.status);
       }
 
-      return response.data;
+      return new PayIRReceipt(response.data.transId, response.data);
     } catch (error: any) {
       if (error instanceof AxiosError) {
         throw this.translateStatus(error.response.data.status);

@@ -1,3 +1,4 @@
+import { Receipt } from "./abstracts/receipt";
 import { Driver } from "./abstracts/driver";
 import { Gateway } from "./gateway";
 
@@ -98,7 +99,7 @@ export class Payment<T extends Driver<any>> {
   /**
    *
    */
-  async verify() {
+  async verify(): Promise<Receipt<any>> {
     return this.getDriver().verify();
   }
 }

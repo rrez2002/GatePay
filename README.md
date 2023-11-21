@@ -103,6 +103,25 @@ In order to pay the invoice, we need the payment transactionId. We purchase the 
 
     // You can show payment referenceId to the user.
     receipt.getReferenceId()
+    // You can get payment date tame.
+    receipt.getDate()
+    
+  } catch (error) {
+    // when payment is not verified, it will throw an exception.
+
+    console.log(error);
+  }
+
+```
+
+#####  You can get payment data.
+```typescript
+  
+  try {
+    const receipt: DriverReceipt = await payment.setTransactionId(transactionId).verify();
+
+    
+    receipt.getData()
     
   } catch (error) {
     // when payment is not verified, it will throw an exception.

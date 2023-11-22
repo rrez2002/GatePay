@@ -1,5 +1,11 @@
 # Typescript Payment Gateway
 
+
+> This package works with multiple drivers, and you can create custom drivers if you can't find them in the [current drivers list](#list-of-available-drivers) (below list).
+
+- [داکیومنت فارسی][link-fa]
+- [English documents][link-en]
+
 # List of contents
 
 - [Typescript Payment Gateway](#typescript-payment-gateway)
@@ -14,11 +20,6 @@
     - [Useful methods](#useful-methods)
     - [Create custom drivers:](#create-custom-drivers)
   - [Local driver (for development)](#local-driver)
-  - [Change log](#change-log)
-  - [Contributing](#contributing)
-  - [Security](#security)
-  - [Credits](#credits)
-  - [License](#license)
 
 
   # List of available drivers
@@ -119,7 +120,6 @@ In order to pay the invoice, we need the payment transactionId. We purchase the 
   
   try {
     const receipt: DriverReceipt = await payment.setTransactionId(transactionId).verify();
-
     
     receipt.getData()
     

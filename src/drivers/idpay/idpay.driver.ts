@@ -14,7 +14,7 @@ import { IdpayReceipt } from "./idpay.receipt";
 
 export class Idpay extends Driver<Invoice<DetailInterface>> {
   public settings: IdpaySetting = {
-    apiPaymentUrl: "https://api.idpay.ir/v1.1/payment/",
+    apiPaymentUrl: "https://idpay.ir/p/ws/",
     apiPurchaseUrl: "https://api.idpay.ir/v1.1/payment",
     apiVerificationUrl: "https://api.idpay.ir/v1.1/payment/verify",
     callbackUrl: "http://yoursite.com/path/to",

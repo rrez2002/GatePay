@@ -35,7 +35,7 @@ export class Zibal extends Driver<Invoice<ZibalDetail>> {
         callbackUrl: this.settings.callbackUrl,
         description: this.getInvoice().getDetail().description,
         orderId: this.getInvoice().getUuid(),
-        mobile: this.getInvoice().getDetail().phone,
+        mobile: this.getInvoice().getDetail().mobile,
       };
 
       const response: AxiosResponse<PurchaseResponseType, PurchaseDataType> =

@@ -1,8 +1,18 @@
-import { Setting } from "../../contracts/interface";
+import { DetailInterface, Setting } from "../../contracts/interface";
 
 export interface IdpaySetting extends Setting {
   sandbox?: boolean;
 }
+
+export interface IdpayDetail extends DetailInterface {
+  amount: number;
+  order_id: string;
+  callback: string;
+  desc?: string;
+  name?: string;
+  phone?: string;
+  mail?: string;
+};
 
 export type PurchaseDataType = {
   amount: number;

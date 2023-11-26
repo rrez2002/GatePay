@@ -3,16 +3,16 @@ import { Driver } from "../../abstracts";
 import { AxiosError, AxiosResponse } from "axios";
 import { Gateway } from "../../gateway";
 import {
+  IdpayDetail,
   IdpaySetting,
   PurchaseDataType,
   PurchaseResponseType,
   VerifyDataType,
   VerifyResponseType,
 } from "./idpay.type";
-import { DetailInterface } from "../../contracts/interface";
 import { IdpayReceipt } from "./idpay.receipt";
 
-export class Idpay extends Driver<Invoice<DetailInterface>> {
+export class Idpay extends Driver<Invoice<IdpayDetail>> {
   public settings: IdpaySetting = {
     apiPaymentUrl: "https://idpay.ir/p/ws/",
     apiPurchaseUrl: "https://api.idpay.ir/v1.1/payment",
@@ -33,11 +33,11 @@ export class Idpay extends Driver<Invoice<DetailInterface>> {
       let data: PurchaseDataType = {
         amount: this.getInvoice().getAmount(),
         callback: this.settings.callbackUrl,
-        desc: this.getInvoice().getDetail().description,
+        desc: this.getInvoice().getDetail().desc,
         order_id: this.getInvoice().getUuid(),
         name: this.getInvoice().getDetail().name,
         phone: this.getInvoice().getDetail().phone,
-        mail: this.getInvoice().getDetail().email,
+        mail: this.getInvoice().getDetail().mail,
       };
 
       const headers = {

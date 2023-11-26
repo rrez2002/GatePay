@@ -9,6 +9,7 @@ interface TestSetting extends Setting {
 }
 
 export interface TestDetail extends DetailInterface {
+  description?: string;
   test?: boolean;
 }
 

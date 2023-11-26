@@ -130,3 +130,99 @@ In order to pay the invoice, we need the payment transactionId. We purchase the 
   }
 
 ```
+
+## Create custom drivers:
+
+```typescript
+
+import { Driver, Receipt, DetailInterface, Setting, Gateway, Invoice, Payment } from "gatepay";
+
+interface CustomSetting extends Setting {}
+
+export interface CustomDetail extends DetailInterface {
+  custom?: string;
+}
+
+type VerifyResponseType = {id: string, order_id: string}
+
+class CustomReceipt extends Receipt<VerifyResponseType> {}
+
+class Custom extends Driver<Invoice<CustomDetail>> {
+  public settings: CustomSetting = {
+      apiPaymentUrl: "http://api.custom.com/payment",
+      apiPurchaseUrl: "http://api.custom.com/purchase",
+      apiVerificationUrl: "http://api.custom.com/verify",
+      callbackUrl: "http://callback.custom.com",
+      merchantId: "",
+  };
+  constructor() {
+    super(new Invoice());
+  }
+
+  // Purchase the invoice, save its transactionId and finaly return it.
+  async purchase(): Promise<string> {
+    // Request for a payment transaction id.
+    ...
+
+
+    this.invoice.setTransactionId("custom");
+
+    return this.invoice.getTransactionId();
+  }
+
+  // Redirect into bank using transactionId, to complete the payment.
+  pay(): Gateway {
+    // Prepare payment url.
+    const payUrl = `${this.settings.apiPaymentUrl}${this.invoice.getTransactionId()}`;
+
+    // Redirect to the bank.
+    return new Gateway(payUrl, "GET");
+  }
+
+  // Verify the payment (we must verify to ensure that user has paid the invoice).
+  async verify(): Promise<CustomReceipt> {
+    //
+
+    return new CustomReceipt("payment_receipt_number", data);
+  }
+}
+
+```
+
+## Local driver
+
+`Local` driver can simulate payment flow of a real gateway for development purpose.
+
+Payment can be initiated like any other driver
+
+#####  You can get payment data.
+
+```typescript
+  // Create new Instance.
+  const payment = new Payment(Local);
+
+  // Set merchantId.
+  payment.setMerchantId("merchantId");
+  // Set invoice amount.
+  payment.setAmount(10000);
+  //Add invoice details.
+  payment.getDriver().setDetail("detail", "value");
+
+```
+
+Payment can be verified after receiving the callback request.
+
+```typescript
+  const receipt: LocalReceipt = await payment.setTransactionId(transactionId).verify();
+```
+
+In case of succesful payment, `receipt` will contains the following parameters
+
+```typescript
+  {
+    orderId: // fake order number 
+    traceNo: // fake trace number (this should be stored in databse)
+    referenceNo: // generated transaction ID in `purchase` method callback
+    cardNo:// fake last four digits of card 
+  }
+```

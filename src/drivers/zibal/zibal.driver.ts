@@ -1,17 +1,18 @@
 import Invoice from "../../invoice";
 import { Driver } from "../../abstracts";
 import { AxiosResponse } from "axios";
-import { DetailInterface, Setting } from "../../contracts/interface";
+import { Setting } from "../../contracts/interface";
 import { Gateway } from "../../gateway";
 import {
   PurchaseDataType,
   PurchaseResponseType,
   VerifyDataType,
   VerifyResponseType,
+  ZibalDetail,
 } from "./zibal.type";
 import { ZibalReceipt } from "./zibal.receipt";
 
-export class Zibal extends Driver<Invoice<DetailInterface>> {
+export class Zibal extends Driver<Invoice<ZibalDetail>> {
   public settings: Setting = {
     apiPaymentUrl: "https://gateway.zibal.ir/start/",
     apiPurchaseUrl: "https://gateway.zibal.ir/v1/request",

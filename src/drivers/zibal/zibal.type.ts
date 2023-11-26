@@ -1,10 +1,26 @@
+import { DetailInterface } from "../../contracts/interface";
+
+export interface ZibalDetail extends DetailInterface {
+  description: string;
+  orderId?: string;
+  mobile?: string;
+  allowedCards?: string;
+  ledgerId?: string;
+  linkToPay?: boolean;
+  sms?: boolean;
+}
+
 export type PurchaseDataType = {
   amount: number;
   merchant: string;
-  callbackUrl: string;
   description: string;
-  orderId: string;
-  mobile: string;
+  callbackUrl: string;
+  orderId?: string;
+  mobile?: string;
+  allowedCards?: string;
+  ledgerId?: string;
+  linkToPay?: boolean;
+  sms?: boolean;
 };
 
 export type PurchaseResponseType = {

@@ -2,6 +2,9 @@ import { DetailInterface } from "../../contracts/interface";
 import { CurrencyType } from "../../contracts/type";
 
 export interface ZarinpalDetail extends DetailInterface {
+  email?: string;
+  phone?: string;
+  description?: string;
   currency?: CurrencyType;
 }
 

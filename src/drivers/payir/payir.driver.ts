@@ -36,7 +36,7 @@ export class PayIR extends Driver<Invoice<PayIRDetail>> {
         redirect: this.settings.callbackUrl,
         description: this.getInvoice().getDetail().description,
         factorNumber: this.getInvoice().getUuid(),
-        mobile: this.getInvoice().getDetail().phone,
+        mobile: this.getInvoice().getDetail().mobile,
         validCardNumber: this.getInvoice().getDetail().validCardNumber,
       };
 

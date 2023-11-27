@@ -1,6 +1,8 @@
 import { DetailInterface } from "../../contracts/interface";
 
 export interface PayIRDetail extends DetailInterface {
+  mobile?: string;
+  description?: string;
   validCardNumber?: string;
 }
 

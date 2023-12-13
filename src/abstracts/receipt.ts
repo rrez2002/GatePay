@@ -5,7 +5,7 @@ export abstract class Receipt<T> implements ReceiptInterface<T> {
 
   constructor(
     private referenceId: string,
-    private data: T,
+    private data?: T,
   ) {
     this.date = new Date();
   }
@@ -14,6 +14,11 @@ export abstract class Receipt<T> implements ReceiptInterface<T> {
   }
   getData(): T {
     return this.data;
+  }
+  setData(data: T): Receipt<T> {
+    this.data = data;
+
+    return this;
   }
   getDate(): Date {
     return this.date;

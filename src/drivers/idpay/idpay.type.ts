@@ -12,7 +12,7 @@ export interface IdpayDetail extends DetailInterface {
   name?: string;
   phone?: string;
   mail?: string;
-};
+}
 
 export type PurchaseDataType = {
   amount: number;

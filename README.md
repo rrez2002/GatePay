@@ -25,7 +25,7 @@
   # List of available drivers
 - [idpay](https://idpay.ir/) :heavy_check_mark:
 - [payir](https://pay.ir/) :heavy_check_mark:
-- [payping](https://www.payping.ir/) (will be added soon in next version)
+- [payping](https://www.payping.ir/) :heavy_check_mark:
 - [zarinpal](https://www.zarinpal.com/) :heavy_check_mark:
 - [zibal](https://www.zibal.ir/) :heavy_check_mark:
 - [local](#local-driver) :heavy_check_mark:

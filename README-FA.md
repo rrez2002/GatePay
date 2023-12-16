@@ -28,7 +28,7 @@
 
 - [ایدی پی](https://idpay.ir/) :heavy_check_mark:
 - [پی آی ار](https://pay.ir/) :heavy_check_mark:
-- [پی پینگ](https://www.payping.ir/) (will be added soon in next version)
+- [پی پینگ](https://www.payping.ir/) :heavy_check_mark:
 - [زرین پال](https://www.zarinpal.com/) :heavy_check_mark:
 - [زیبال](https://www.zibal.ir/) :heavy_check_mark:
 

@@ -14,11 +14,12 @@
   "keywords": [
     "js",
     "javascript",
+    "typescript",
     "nodejs",
     "gateway",
     "payment"
   ],
-  "author": "",
+  "author": "reza rezaei",
   "license": "ISC",
   "dependencies": {
     "axios": ">=1.2.5"
@@ -44,6 +45,14 @@
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2",
     "uuid": "^9.0.0"
+  },
+  "types": "./types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./lib/index.mjs",
+      "require": "./lib/index.js"
+    }
   },
   "repository": {
     "type": "git",

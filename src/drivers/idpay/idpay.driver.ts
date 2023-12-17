@@ -18,7 +18,7 @@ export class Idpay extends Driver<Invoice<IdpayDetail>> {
     apiPurchaseUrl: "https://api.idpay.ir/v1.1/payment",
     apiVerificationUrl: "https://api.idpay.ir/v1.1/payment/verify",
     callbackUrl: "http://yoursite.com/path/to",
-    merchantId: "7c9c2457-2798-4d42-b2e2-d8db9ff5b298",
+    merchantId: "",
     sandbox: false,
   };
   constructor() {

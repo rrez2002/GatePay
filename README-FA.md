@@ -8,8 +8,8 @@
 > این پکیج با درگاه‌های پرداخت مختلفی کار میکنه. در صورتی که درگاه مورد نظرتون رو در لیست درایورهای موجود پیدا نکردید می‌تونید برای درگاهی که استفاده می‌کنید درایور مورد نظرتون رو بسازید.
 
 
-- [داکیومنت فارسی][link-fa]
-- [English documents][link-en]
+- [داکیومنت فارسی](https://github.com/rrez2002/GatePay/blob/main/README-FA.md)
+- [English documents](https://github.com/rrez2002/GatePay/blob/main/README.md)
 
 # لیست محتوا
 

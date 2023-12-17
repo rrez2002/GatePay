@@ -3,8 +3,8 @@
 
 > This package works with multiple drivers, and you can create custom drivers if you can't find them in the [current drivers list](#list-of-available-drivers) (below list).
 
-- [داکیومنت فارسی][link-fa]
-- [English documents][link-en]
+- [داکیومنت فارسی](https://github.com/rrez2002/GatePay/blob/main/README-FA.md)
+- [English documents](https://github.com/rrez2002/GatePay/blob/main/README.md)
 
 # List of contents
 

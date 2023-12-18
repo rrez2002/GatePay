@@ -6,4 +6,7 @@ export interface GatewayInterface {
 export type ToJsonResponse = {
   url: string;
   method: "GET" | "POST";
+  inputs: InputType[];
 };
+
+export type InputType = { key: string; value: string };

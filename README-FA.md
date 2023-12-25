@@ -26,9 +26,11 @@
 
 # درایورهای موجود
 
+- [آتی‌پی](https://www.atipay.net/) :heavy_check_mark:
 - [ایدی پی](https://idpay.ir/) :heavy_check_mark:
 - [پی آی ار](https://pay.ir/) :heavy_check_mark:
 - [پی پینگ](https://www.payping.ir/) :heavy_check_mark:
+- [سپ (درگاه الکترونیک سامان) کشاورزی و صادرات](https://www.sep.ir) :heavy_check_mark:
 - [زرین پال](https://www.zarinpal.com/) :heavy_check_mark:
 - [زیبال](https://www.zibal.ir/) :heavy_check_mark:
 

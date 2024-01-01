@@ -1,7 +1,7 @@
 import { ReceiptInterface } from "../contracts/interface/receipt.interface";
 
 export abstract class Receipt<T> implements ReceiptInterface<T> {
-  private date: Date;
+  private readonly date: Date;
 
   constructor(
     private referenceId: string,

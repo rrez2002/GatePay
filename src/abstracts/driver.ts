@@ -7,7 +7,7 @@ import { Receipt } from "./receipt";
 export abstract class Driver<T extends Invoice<any>> {
   protected invoice: T;
   public settings: Setting;
-  constructor(invoice: T) {
+  protected constructor(invoice: T) {
     this.invoice = invoice;
   }
 

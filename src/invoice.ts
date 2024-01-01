@@ -1,5 +1,6 @@
 import { DetailInterface, InvoiceInterface } from "./contracts/interface";
 import { v4 as uuidv4 } from "uuid";
+import { CurrencyType } from "./contracts/type";
 
 export default class Invoice<D extends DetailInterface>
   implements InvoiceInterface<D>
@@ -9,6 +10,7 @@ export default class Invoice<D extends DetailInterface>
   driver: string;
   amount: number = 0;
   details: Partial<D> = {};
+  currency: CurrencyType = "IRR";
 
   constructor() {
     this.setUuid();
@@ -37,7 +39,7 @@ export default class Invoice<D extends DetailInterface>
     return this.transactionId;
   }
   getAmount(): number {
-    return this.amount;
+    return this.currency == "IRR" ? this.amount : this.amount / 10 ;
   }
   setAmount(amount: number) {
     this.amount = amount;
@@ -52,5 +54,14 @@ export default class Invoice<D extends DetailInterface>
 
   getDetail(): Partial<D> {
     return this.details;
+  }
+  setCurrency(currency: CurrencyType): Invoice<D> {
+    this.currency = currency;
+
+    return this;
+  }
+
+  getCurrency(): CurrencyType {
+    return this.currency;
   }
 }

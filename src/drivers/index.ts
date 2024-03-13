@@ -6,3 +6,4 @@ export { Idpay } from "./idpay/idpay.driver";
 export { Payping } from "./payping/payping.driver";
 export { Atipay } from "./atipay/atipay.driver";
 export { Sep } from "./sep/sep.driver";
+export { Shepa } from "./shepa/shepa.driver";

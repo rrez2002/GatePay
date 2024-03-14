@@ -30,6 +30,7 @@
 - [sep (saman electronic payment) Keshavarzi & Saderat](https://www.sep.ir) :heavy_check_mark:
 - [zarinpal](https://www.zarinpal.com/) :heavy_check_mark:
 - [zibal](https://www.zibal.ir/) :heavy_check_mark:
+- [shepa](https://shepa.com/) :heavy_check_mark:
 - [local](#local-driver) :heavy_check_mark:
 - Others are under way.
 
